@@ -104,7 +104,6 @@
             transform: translateY(-3px);
             box-shadow: 0 12px 25px rgba(0, 0, 0, 0.3);
         }
-        /* 音乐卡片 */
         .music-card {
             background: rgba(25, 35, 55, 0.75);
             backdrop-filter: blur(14px);
@@ -395,13 +394,11 @@
 <canvas id="starCanvas"></canvas>
 
 <div class="glass-panel" id="tiltPanel">
-    <!-- 全局头像 -->
     <img src="user.jpg" alt="Avatar" class="avatar"
          onerror="this.onerror=null; this.src='https://via.placeholder.com/90?text=Avatar';">
 
     <h1 class="main-id">MirkCOG</h1>
 
-    <!-- Steam卡片 - 纯静态版本，展示个人资料并链接到 Steam 社区 -->
     <a href="https://steamcommunity.com/profiles/76561199866924921/" target="_blank" rel="noopener noreferrer" class="steam-card" id="steamCardStatic">
         <div class="steam-avatar">
             <img id="steamAvatarStatic" src="https://avatars.steamstatic.com/c38c8a6fc3dfa7823160d0a7edee125c1b8051fe_full.jpg" alt="Steam Avatar"
@@ -420,10 +417,8 @@
         </div>
     </a>
 
-    <!-- 音乐播放器卡片 (静态，保留完整JS交互) -->
     <div class="music-card">
         <div class="music-left">
-            <!-- 专辑封面，若图片不存在则显示后备图标 -->
             <img src="Hotel Party.jfif" class="music-mini-cover" alt="cover"
                  onerror="this.onerror=null; this.parentElement.querySelector('.fallback-icon')?.style.display='flex'; this.style.display='none';">
             <div class="fallback-icon" style="width:44px; height:44px; background:#2c2f33; border-radius:12px; display:none; align-items:center; justify-content:center;">
@@ -444,31 +439,25 @@
     </div>
     <audio id="hiddenAudio" src="Crash Adams - Hotel Party.mp3" loop preload="auto"></audio>
 
-    <!-- 社交链接块 (图标/图片) -->
     <div class="uid-nav-block">
-        <!-- Steam 链接 -->
         <a href="https://steamcommunity.com/profiles/76561199866924921/" target="_blank" rel="noopener noreferrer" class="uid-item">
             <i class="fa-brands fa-steam"></i>
             <span>Steam</span>
         </a>
-        <!-- YouTube 链接 -->
         <a href="https://www.youtube.com/@cogx3469" target="_blank" rel="noopener noreferrer" class="uid-item">
             <i class="fa-brands fa-youtube"></i>
             <span>YouTube</span>
         </a>
-        <!-- Gamesense 图片链接 -->
         <a href="https://gamesense.pub/forums/profile.php?id=4732" target="_blank" rel="noopener noreferrer" class="uid-item">
             <img src="1.png" alt="Gamesense" class="uid-img" onerror="this.onerror=null; this.src='https://via.placeholder.com/36?text=GS';">
             <span>Gamesense</span>
         </a>
-        <!-- Melatonin 图片链接 -->
         <a href="https://melatonin.win/members/mirkcog.666/" target="_blank" rel="noopener noreferrer" class="uid-item">
             <img src="melatonin.png" alt="Melatonin" class="uid-img" onerror="this.onerror=null; this.src='https://via.placeholder.com/36?text=MLT';">
             <span>Melatonin</span>
         </a>
     </div>
 
-    <!-- 纯文字按钮组 -->
     <div class="link-buttons">
         <a href="#" target="_blank" rel="noopener noreferrer">CS2 Setting</a>
         <a href="#" target="_blank" rel="noopener noreferrer">Melatonin Helper</a>
@@ -478,7 +467,6 @@
 
 <script>
     (function() {
-        // 星空动画背景（完全保留原特效）
         const starConfig = {
             starCount: window.innerWidth < 768 ? 80 : 150,
             starMaxSize: 2.2,
@@ -565,7 +553,6 @@
     })();
 
     (function() {
-        // 动态标题打字效果
         const fullText = "MirkCOG";
         const typeInterval = 1200;
         const holdTime = 5000;
@@ -607,7 +594,6 @@
     })();
 
     (function() {
-        // 面板倾斜跟随鼠标效果
         const panel = document.getElementById('tiltPanel');
         if (!panel) return;
         const maxRotateX = 5;
@@ -638,7 +624,6 @@
     })();
 
     (function() {
-        // 音乐播放器逻辑（独立完整保留）
         const audio = document.getElementById('hiddenAudio');
         const volumeSlider = document.getElementById('volumeSlider');
         const volumePercent = document.getElementById('volumePercent');
