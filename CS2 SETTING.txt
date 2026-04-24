@@ -1,0 +1,11 @@
+viewmodel_fov 68;
+viewmodel_offset_x 2.5;
+viewmodel_offset_y 2;
+viewmodel_offset_z -1.5;
+apply_crosshair_code CSGO-Vq9VP-MhAba-JURuA-GDoUC-zFSZQ;
+bind "F2" "use weapon_smokegrenade";
+bind "F1" "use weapon_flashbang";
+bind "X" "use weapon_incgrenade;use weapon_molotov";
+bind "Z" "use weapon_hegrenade";
+bind "C" "toggle cl_righthand 0 1";
+bind "N" "incrementvar cl_radar_scale 0.4 0.7
