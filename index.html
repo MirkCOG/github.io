@@ -259,65 +259,94 @@
                 padding: 24px 18px 32px;
                 border-radius: 40px;
             }
-            /* 第1层：头像 */
             .avatar {
                 width: 76px;
                 height: 76px;
                 margin-bottom: 14px;
             }
-            /* 第2层：标题 */
             .main-id {
                 font-size: 2rem;
                 margin-bottom: 18px;
             }
             .music-card {
-                width: 100%;
+                display: flex;
                 flex-direction: row;
                 align-items: center;
-                justify-content: space-between;
-                gap: 10px;
-                padding: 8px 16px;
+                justify-content: flex-start;
+                gap: 14px;
+                padding: 10px 16px;
                 border-radius: 28px;
                 margin-bottom: 22px;
+                width: 100%;
+                flex-wrap: nowrap;
             }
-            .music-left {
-                width: auto;
-                justify-content: flex-start;
-                gap: 10px;
+            .music-card .music-left {
                 flex-shrink: 0;
+                width: auto;
+                margin: 0;
             }
             .music-mini-cover {
-                width: 36px;
-                height: 36px;
-                border-radius: 10px;
+                width: 48px;
+                height: 48px;
+                border-radius: 14px;
             }
-            .music-mini-title {
-                font-size: 0.85rem;
-                gap: 5px;
+            .music-info-stack {
+                flex: 1;
+                display: flex;
+                flex-direction: column;
+                gap: 8px;
+                min-width: 0;
             }
-            .music-mini-icon {
-                font-size: 0.75rem;
-            }
-            .volume-control-inline {
-                padding: 4px 10px;
+            .music-title-row {
+                display: flex;
+                align-items: center;
                 gap: 6px;
-                flex-shrink: 0;
             }
-            .volume-slider {
-                width: 70px;
-                height: 3px;
-            }
-            .volume-slider::-webkit-slider-thumb {
-                width: 12px;
-                height: 12px;
-            }
-            .volume-percent {
-                font-size: 0.65rem;
-                min-width: 32px;
-            }
-            .volume-control-inline i {
+            .music-title-row .music-mini-icon {
                 font-size: 0.8rem;
-                width: 22px;
+                color: #7c9eff;
+            }
+            .music-title-row span {
+                font-size: 0.9rem;
+                font-weight: 600;
+                color: #fff;
+                white-space: nowrap;
+                overflow: hidden;
+                text-overflow: ellipsis;
+            }
+            .volume-row {
+                display: flex;
+                align-items: center;
+                gap: 10px;
+                background: rgba(20, 30, 45, 0.6);
+                border-radius: 40px;
+                padding: 4px 12px;
+                width: fit-content;
+                max-width: 100%;
+            }
+            .volume-row i {
+                font-size: 0.8rem;
+                color: #c8d6ff;
+                cursor: pointer;
+                width: 24px;
+                text-align: center;
+            }
+            .volume-row .volume-slider {
+                width: 110px;
+                height: 3px;
+                background: rgba(220, 230, 255, 0.3);
+            }
+            .volume-row .volume-slider::-webkit-slider-thumb {
+                width: 14px;
+                height: 14px;
+            }
+            .volume-row .volume-percent {
+                font-size: 0.7rem;
+                min-width: 36px;
+                color: #ddd;
+            }
+            .music-card .volume-control-inline {
+                display: none;
             }
             .uid-nav-block {
                 gap: 12px;
@@ -356,18 +385,12 @@
             .main-id {
                 font-size: 1.8rem;
             }
-            .music-card {
-                padding: 6px 12px;
-            }
             .music-mini-cover {
-                width: 32px;
-                height: 32px;
+                width: 42px;
+                height: 42px;
             }
-            .music-mini-title {
-                font-size: 0.8rem;
-            }
-            .volume-slider {
-                width: 60px;
+            .volume-row .volume-slider {
+                width: 90px;
             }
             .uid-item {
                 width: 72px;
@@ -388,15 +411,29 @@
     <div class="music-card">
         <div class="music-left">
             <img src="Hotel+Party.jfif" class="music-mini-cover" alt="cover" 
-                 onerror="this.onerror=null; this.parentElement.innerHTML='<div class=\'music-mini-cover\' style=\'background:#2c2f33; display:flex; align-items:center; justify-content:center;\'><i class=\'fas fa-music\' style=\'color:#aaa; font-size:16px;\'></i></div>';">
-            <div class="music-mini-info">
-                <div class="music-mini-title">
-                    <i class="fas fa-headphones music-mini-icon"></i>
-                    <span>Hotel Party</span>
-                </div>
+                 onerror="this.onerror=null; this.parentElement.innerHTML='<div class=\'music-mini-cover\' style=\'background:#2c2f33; display:flex; align-items:center; justify-content:center;\'><i class=\'fas fa-music\' style=\'color:#aaa; font-size:20px;\'></i></div>';">
+        </div>
+        
+        <div class="music-mini-info desktop-only-info">
+            <div class="music-mini-title">
+                <i class="fas fa-headphones music-mini-icon"></i>
+                <span>Hotel Party</span>
             </div>
         </div>
-        <div class="volume-control-inline">
+        
+        <div class="music-info-stack mobile-stack">
+            <div class="music-title-row">
+                <i class="fas fa-headphones music-mini-icon"></i>
+                <span>Hotel Party</span>
+            </div>
+            <div class="volume-row" id="mobileVolumeRow">
+                <i class="fas fa-volume-down" id="volumeIconMobile"></i>
+                <input type="range" id="volumeSliderMobile" class="volume-slider" min="0" max="1" step="0.01" value="0.20">
+                <span id="volumePercentMobile" class="volume-percent">20%</span>
+            </div>
+        </div>
+
+        <div class="volume-control-inline desktop-volume">
             <i class="fas fa-volume-down" id="volumeIcon"></i>
             <input type="range" id="volumeSlider" class="volume-slider" min="0" max="1" step="0.01" value="0.20">
             <span id="volumePercent" class="volume-percent">20%</span>
@@ -628,10 +665,12 @@
 
     (function() {
         const audio = document.getElementById('hiddenAudio');
-        const volumeSlider = document.getElementById('volumeSlider');
-        const volumePercent = document.getElementById('volumePercent');
-        const volumeIcon = document.getElementById('volumeIcon');
-        if (!audio) return;
+        const desktopSlider = document.getElementById('volumeSlider');
+        const desktopPercent = document.getElementById('volumePercent');
+        const desktopIcon = document.getElementById('volumeIcon');
+        const mobileSlider = document.getElementById('volumeSliderMobile');
+        const mobilePercent = document.getElementById('volumePercentMobile');
+        const mobileIcon = document.getElementById('volumeIconMobile');
 
         let savedVolume = localStorage.getItem('musicVolume');
         if (savedVolume !== null && !isNaN(parseFloat(savedVolume))) {
@@ -640,49 +679,55 @@
             savedVolume = 0.20;
         }
         audio.volume = savedVolume;
-        if (volumeSlider) volumeSlider.value = savedVolume;
-        if (volumePercent) volumePercent.innerText = Math.round(savedVolume * 100) + '%';
-        
-        function updateVolumeIcon(vol) {
-            if (!volumeIcon) return;
-            if (vol <= 0) volumeIcon.className = 'fas fa-volume-mute';
-            else if (vol < 0.5) volumeIcon.className = 'fas fa-volume-down';
-            else volumeIcon.className = 'fas fa-volume-up';
-        }
-        updateVolumeIcon(savedVolume);
 
-        if (volumeSlider) {
-            volumeSlider.addEventListener('input', function(e) {
-                let val = parseFloat(e.target.value);
-                audio.volume = val;
-                if (volumePercent) volumePercent.innerText = Math.round(val * 100) + '%';
-                updateVolumeIcon(val);
-                localStorage.setItem('musicVolume', val);
-            });
-            volumeSlider.addEventListener('touchstart', (e) => e.stopPropagation());
+        function updateAllUI(vol) {
+            const percent = Math.round(vol * 100) + '%';
+            if (desktopSlider) desktopSlider.value = vol;
+            if (desktopPercent) desktopPercent.innerText = percent;
+            if (mobileSlider) mobileSlider.value = vol;
+            if (mobilePercent) mobilePercent.innerText = percent;
+            
+            const iconClass = vol <= 0 ? 'fas fa-volume-mute' : (vol < 0.5 ? 'fas fa-volume-down' : 'fas fa-volume-up');
+            if (desktopIcon) desktopIcon.className = iconClass;
+            if (mobileIcon) mobileIcon.className = iconClass;
         }
 
-        if (volumeIcon) {
-            volumeIcon.style.cursor = 'pointer';
-            volumeIcon.addEventListener('click', function(e) {
-                e.preventDefault();
-                if (audio.volume > 0) {
-                    localStorage.setItem('musicVolume_beforeMute', audio.volume);
-                    audio.volume = 0;
-                    if (volumeSlider) volumeSlider.value = 0;
-                    if (volumePercent) volumePercent.innerText = '0%';
-                    updateVolumeIcon(0);
-                } else {
-                    let lastVol = localStorage.getItem('musicVolume_beforeMute');
-                    let newVol = (lastVol && !isNaN(parseFloat(lastVol))) ? parseFloat(lastVol) : 0.20;
-                    audio.volume = newVol;
-                    if (volumeSlider) volumeSlider.value = newVol;
-                    if (volumePercent) volumePercent.innerText = Math.round(newVol * 100) + '%';
-                    updateVolumeIcon(newVol);
-                    localStorage.setItem('musicVolume', newVol);
-                }
-            });
+        function handleVolumeChange(val) {
+            audio.volume = val;
+            updateAllUI(val);
+            localStorage.setItem('musicVolume', val);
         }
+
+        if (desktopSlider) {
+            desktopSlider.addEventListener('input', (e) => handleVolumeChange(parseFloat(e.target.value)));
+            desktopSlider.addEventListener('touchstart', (e) => e.stopPropagation());
+        }
+        if (mobileSlider) {
+            mobileSlider.addEventListener('input', (e) => handleVolumeChange(parseFloat(e.target.value)));
+            mobileSlider.addEventListener('touchstart', (e) => e.stopPropagation());
+        }
+
+        function toggleMute() {
+            if (audio.volume > 0) {
+                localStorage.setItem('musicVolume_beforeMute', audio.volume);
+                handleVolumeChange(0);
+            } else {
+                let lastVol = localStorage.getItem('musicVolume_beforeMute');
+                let newVol = (lastVol && !isNaN(parseFloat(lastVol))) ? parseFloat(lastVol) : 0.20;
+                handleVolumeChange(newVol);
+            }
+        }
+
+        if (desktopIcon) {
+            desktopIcon.style.cursor = 'pointer';
+            desktopIcon.addEventListener('click', toggleMute);
+        }
+        if (mobileIcon) {
+            mobileIcon.style.cursor = 'pointer';
+            mobileIcon.addEventListener('click', toggleMute);
+        }
+
+        updateAllUI(savedVolume);
         
         function attemptAutoPlay() {
             audio.play().then(() => {}).catch(() => {
@@ -695,9 +740,20 @@
                 document.addEventListener('touchstart', startOnInteraction);
             });
         }
-        
         window.addEventListener('load', attemptAutoPlay);
     })();
+
+    function toggleLayoutByWidth() {
+        const isMobile = window.innerWidth <= 680;
+        const desktopInfo = document.querySelector('.desktop-only-info');
+        const desktopVol = document.querySelector('.desktop-volume');
+        const mobileStack = document.querySelector('.mobile-stack');
+        if (desktopInfo) desktopInfo.style.display = isMobile ? 'none' : '';
+        if (desktopVol) desktopVol.style.display = isMobile ? 'none' : 'flex';
+        if (mobileStack) mobileStack.style.display = isMobile ? 'flex' : 'none';
+    }
+    window.addEventListener('resize', toggleLayoutByWidth);
+    toggleLayoutByWidth();
 </script>
 </body>
 </html>
