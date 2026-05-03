@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="zh-CN">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, viewport-fit=cover">
@@ -473,6 +473,14 @@
             .account-icon { width: 38px; height: 38px; }
             .account-icon img { width: 65%; height: 65%; }
         }
+        .modal-header h3 img {
+            width: 1.4rem;
+            height: 1.4rem;
+            object-fit: contain;
+            vertical-align: middle;
+            margin-right: 8px;
+            display: inline-block;
+        }
     </style>
 </head>
 <body>
@@ -543,9 +551,8 @@
 
     <div class="link-buttons">
         <a href="CS2 SETTING.txt" target="_blank" rel="noopener noreferrer">CS2 Setting</a>
-        <a href="gamesense legit.txt" target="_blank" rel="noopener noreferrer">Gamesense Legit Config</a>
-        <a href="Melatonin Helper.txt" target="_blank" rel="noopener noreferrer">Melatonin Helper</a>
-        <a href="Melatonin Legit Config.txt" target="_blank" rel="noopener noreferrer">Melatonin Config</a>
+        <a href="#" id="gamesenseConfigTrigger">Gamesense Config</a>
+        <a href="#" id="melatoninConfigTrigger">Melatonin Config</a>
         <a href="ExitScam Legit Config.cfg" target="_blank" rel="noopener noreferrer">ExitScam Config</a>
     </div>
 </div>
@@ -565,28 +572,41 @@
     </div>
 </div>
 
-<script>
-    const STEAM_ACCOUNTS = [
-        {
-            name: "Main Account",
-            description: "Melatonin",
-            url: "https://steamcommunity.com/profiles/76561199866924921/",
-            iconFallback: '<img src="melatonin.png" alt="MT">'
-        },
-        {
-            name: "Secondary Main Account",
-            description: "Gamesense; Melatonin",
-            url: "https://steamcommunity.com/profiles/76561199348300736/",
-            iconFallback: '<img src="gamesense.png" alt="GS">'
-        },
-        {
-            name: "Secondary Account",
-            description: "Gamesense; Melatonin; ExitScam; Midnight",
-            url: "https://steamcommunity.com/profiles/76561199514027255/",
-            iconFallback: '<img src="ExitScam.png" alt="ES">'
-        }
-    ];
+<div id="melatoninModalOverlay" class="modal-overlay">
+    <div class="modal-container">
+        <div class="modal-header">
+            <h3>
+                <img src="melatonin.png" alt="Melatonin"> Melatonin Config
+            </h3>
+            <div class="modal-close" id="melatoninModalClose">
+                <i class="fas fa-times"></i>
+            </div>
+        </div>
+        <div class="accounts-list" id="melatoninAccountsList"></div>
+        <div class="modal-footer">
+            <button class="cancel-btn" id="melatoninModalCancel">Close</button>
+        </div>
+    </div>
+</div>
 
+<div id="gamesenseModalOverlay" class="modal-overlay">
+    <div class="modal-container">
+        <div class="modal-header">
+            <h3>
+                <img src="gs.png" alt="Gamesense"> Gamesense Config
+            </h3>
+            <div class="modal-close" id="gamesenseModalClose">
+                <i class="fas fa-times"></i>
+            </div>
+        </div>
+        <div class="accounts-list" id="gamesenseAccountsList"></div>
+        <div class="modal-footer">
+            <button class="cancel-btn" id="gamesenseModalCancel">Close</button>
+        </div>
+    </div>
+</div>
+
+<script>
     (function() {
         const starConfig = {
             starCount: window.innerWidth < 768 ? 80 : 150,
@@ -773,84 +793,96 @@
     window.addEventListener('resize', toggleLayoutByWidth);
     toggleLayoutByWidth();
 
-    (function initMultiSteamModal() {
-        const steamTrigger = document.getElementById('steamCardTrigger');
-        const modalOverlay = document.getElementById('steamModalOverlay');
-        const closeBtn = document.getElementById('modalCloseBtn');
-        const cancelBtn = document.getElementById('modalCancelBtn');
-        const accountsContainer = document.getElementById('accountsListContainer');
-        
-        if (!steamTrigger || !modalOverlay || !accountsContainer) return;
+    const STEAM_ACCOUNTS = [
+        { name: "Main Account", description: "Melatonin", url: "https://steamcommunity.com/profiles/76561199866924921/", iconFallback: '<img src="melatonin.png" alt="MT">' },
+        { name: "Secondary Main Account", description: "Gamesense; Melatonin", url: "https://steamcommunity.com/profiles/76561199348300736/", iconFallback: '<img src="gamesense.png" alt="GS">' },
+        { name: "Secondary Account", description: "Gamesense; Melatonin; ExitScam; Midnight", url: "https://steamcommunity.com/profiles/76561199514027255/", iconFallback: '<img src="ExitScam.png" alt="ES">' }
+    ];
+    function renderSteamAccounts() {
+        const container = document.getElementById('accountsListContainer');
+        if (!container) return;
+        container.innerHTML = '';
+        STEAM_ACCOUNTS.forEach(acc => {
+            const div = document.createElement('div'); div.className = 'account-item';
+            div.addEventListener('click', () => { if(acc.url) window.open(acc.url, '_blank'); hideSteamModal(); });
+            const iconDiv = document.createElement('div'); iconDiv.className = 'account-icon'; iconDiv.innerHTML = acc.iconFallback || '<i class="fab fa-steam"></i>';
+            const infoDiv = document.createElement('div'); infoDiv.className = 'account-info';
+            infoDiv.innerHTML = `<div class="account-name">${acc.name}</div><div class="account-desc">${acc.description}</div>`;
+            const arrow = document.createElement('div'); arrow.className = 'account-arrow'; arrow.innerHTML = '<i class="fas fa-chevron-right"></i>';
+            div.appendChild(iconDiv); div.appendChild(infoDiv); div.appendChild(arrow);
+            container.appendChild(div);
+        });
+    }
+    const steamModal = document.getElementById('steamModalOverlay');
+    function showSteamModal() { renderSteamAccounts(); steamModal.classList.add('active'); document.body.style.overflow = 'hidden'; }
+    function hideSteamModal() { steamModal.classList.remove('active'); document.body.style.overflow = ''; }
+    document.getElementById('steamCardTrigger')?.addEventListener('click', (e) => { e.preventDefault(); showSteamModal(); });
+    document.getElementById('modalCloseBtn')?.addEventListener('click', hideSteamModal);
+    document.getElementById('modalCancelBtn')?.addEventListener('click', hideSteamModal);
+    steamModal?.addEventListener('click', (e) => { if(e.target === steamModal) hideSteamModal(); });
 
-        function renderAccountsList() {
-            accountsContainer.innerHTML = '';
-            STEAM_ACCOUNTS.forEach((account) => {
-                const itemDiv = document.createElement('div');
-                itemDiv.className = 'account-item';
-                itemDiv.addEventListener('click', (e) => {
-                    e.stopPropagation();
-                    if (account.url && account.url.trim() !== '') {
-                        window.open(account.url, '_blank', 'noopener,noreferrer');
-                        hideModal();
-                    } else {
-                        console.warn('Steam profile URL not configured for this account.');
-                    }
-                });
-                const iconDiv = document.createElement('div');
-                iconDiv.className = 'account-icon';
-                if (account.iconFallback) {
-                    if (account.iconFallback.trim().startsWith('<img')) {
-                        iconDiv.innerHTML = account.iconFallback;
-                    } else {
-                        iconDiv.innerHTML = account.iconFallback;
-                    }
-                } else {
-                    iconDiv.innerHTML = '<i class="fab fa-steam"></i>';
-                }
-                const infoDiv = document.createElement('div');
-                infoDiv.className = 'account-info';
-                const nameSpan = document.createElement('div');
-                nameSpan.className = 'account-name';
-                nameSpan.innerHTML = `${account.name} ${account.badge ? `<span class="account-badge">${account.badge}</span>` : ''}`;
-                const descSpan = document.createElement('div');
-                descSpan.className = 'account-desc';
-                descSpan.innerText = account.description || (account.badge ? `Steam profile` : 'Click to open profile');
-                infoDiv.appendChild(nameSpan);
-                infoDiv.appendChild(descSpan);
-                const arrowSpan = document.createElement('div');
-                arrowSpan.className = 'account-arrow';
-                arrowSpan.innerHTML = '<i class="fas fa-chevron-right"></i>';
-                itemDiv.appendChild(iconDiv);
-                itemDiv.appendChild(infoDiv);
-                itemDiv.appendChild(arrowSpan);
-                accountsContainer.appendChild(itemDiv);
-            });
-        }
+    const MELATONIN_CONFIGS = [
+        { name: "Melatonin Legit Config", url: "Melatonin Legit Config.txt", icon: '<i class="fas fa-life-ring"></i>' },
+        { name: "Melatonin Helper", url: "Melatonin Helper.txt", icon: '<i class="fas fa-sliders-h"></i>' }
+    ];
+    function renderMelatoninConfigs() {
+        const container = document.getElementById('melatoninAccountsList');
+        if (!container) return;
+        container.innerHTML = '';
+        MELATONIN_CONFIGS.forEach(cfg => {
+            const div = document.createElement('div'); div.className = 'account-item';
+            div.addEventListener('click', () => { if(cfg.url) window.open(cfg.url, '_blank'); hideMelatoninModal(); });
+            const iconDiv = document.createElement('div'); iconDiv.className = 'account-icon'; iconDiv.innerHTML = cfg.icon || '<i class="fas fa-file-alt"></i>';
+            const infoDiv = document.createElement('div'); infoDiv.className = 'account-info';
+            infoDiv.innerHTML = `<div class="account-name">${cfg.name}</div>`;
+            const arrow = document.createElement('div'); arrow.className = 'account-arrow'; arrow.innerHTML = '<i class="fas fa-chevron-right"></i>';
+            div.appendChild(iconDiv); div.appendChild(infoDiv); div.appendChild(arrow);
+            container.appendChild(div);
+        });
+    }
+    const melatoninModal = document.getElementById('melatoninModalOverlay');
+    function showMelatoninModal() { renderMelatoninConfigs(); melatoninModal.classList.add('active'); document.body.style.overflow = 'hidden'; }
+    function hideMelatoninModal() { melatoninModal.classList.remove('active'); document.body.style.overflow = ''; }
+    document.getElementById('melatoninConfigTrigger')?.addEventListener('click', (e) => { e.preventDefault(); showMelatoninModal(); });
+    document.getElementById('melatoninModalClose')?.addEventListener('click', hideMelatoninModal);
+    document.getElementById('melatoninModalCancel')?.addEventListener('click', hideMelatoninModal);
+    melatoninModal?.addEventListener('click', (e) => { if(e.target === melatoninModal) hideMelatoninModal(); });
 
-        function showModal() {
-            renderAccountsList();
-            modalOverlay.classList.add('active');
-            document.body.style.overflow = 'hidden';
-        }
-        function hideModal() {
-            modalOverlay.classList.remove('active');
+    const GAMESENSE_CONFIGS = [
+        { name: "Legit Config", url: "gamesense legit.txt", icon: '<i class="fas fa-life-ring"></i>' },
+        { name: "Pairing Melatonin Config", url: "gsmt.txt", icon: '<i class="fas fa-life-ring"></i>' }
+    ];
+    function renderGamesenseConfigs() {
+        const container = document.getElementById('gamesenseAccountsList');
+        if (!container) return;
+        container.innerHTML = '';
+        GAMESENSE_CONFIGS.forEach(cfg => {
+            const div = document.createElement('div'); div.className = 'account-item';
+            div.addEventListener('click', () => { if(cfg.url) window.open(cfg.url, '_blank'); hideGamesenseModal(); });
+            const iconDiv = document.createElement('div'); iconDiv.className = 'account-icon'; iconDiv.innerHTML = cfg.icon || '<i class="fas fa-cog"></i>';
+            const infoDiv = document.createElement('div'); infoDiv.className = 'account-info';
+            infoDiv.innerHTML = `<div class="account-name">${cfg.name}</div>`;
+            const arrow = document.createElement('div'); arrow.className = 'account-arrow'; arrow.innerHTML = '<i class="fas fa-chevron-right"></i>';
+            div.appendChild(iconDiv); div.appendChild(infoDiv); div.appendChild(arrow);
+            container.appendChild(div);
+        });
+    }
+    const gamesenseModal = document.getElementById('gamesenseModalOverlay');
+    function showGamesenseModal() { renderGamesenseConfigs(); gamesenseModal.classList.add('active'); document.body.style.overflow = 'hidden'; }
+    function hideGamesenseModal() { gamesenseModal.classList.remove('active'); document.body.style.overflow = ''; }
+    document.getElementById('gamesenseConfigTrigger')?.addEventListener('click', (e) => { e.preventDefault(); showGamesenseModal(); });
+    document.getElementById('gamesenseModalClose')?.addEventListener('click', hideGamesenseModal);
+    document.getElementById('gamesenseModalCancel')?.addEventListener('click', hideGamesenseModal);
+    gamesenseModal?.addEventListener('click', (e) => { if(e.target === gamesenseModal) hideGamesenseModal(); });
+
+    document.addEventListener('keydown', (e) => {
+        if (e.key !== 'Escape') return;
+        const activeModal = document.querySelector('.modal-overlay.active');
+        if (activeModal) {
+            activeModal.classList.remove('active');
             document.body.style.overflow = '';
         }
-        steamTrigger.addEventListener('click', (e) => {
-            e.preventDefault();
-            e.stopPropagation();
-            showModal();
-        });
-        if (closeBtn) closeBtn.addEventListener('click', hideModal);
-        if (cancelBtn) cancelBtn.addEventListener('click', hideModal);
-        modalOverlay.addEventListener('click', (e) => {
-            if (e.target === modalOverlay) hideModal();
-        });
-        document.addEventListener('keydown', (e) => {
-            if (e.key === 'Escape' && modalOverlay.classList.contains('active')) hideModal();
-        });
-        renderAccountsList();
-    })();
+    });
 </script>
 </body>
 </html>
