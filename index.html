@@ -196,6 +196,7 @@
             text-decoration: none;
             color: #ffffff;
             transition: all 0.25s cubic-bezier(0.2, 0.9, 0.4, 1.1);
+            cursor: pointer;
         }
         .uid-img {
             width: 36px;
@@ -240,158 +241,237 @@
             border-color: rgba(255, 255, 255, 0.5);
             transform: translateY(-2px);
         }
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            backdrop-filter: blur(12px);
+            z-index: 2000;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            transition: opacity 0.25s ease;
+        }
+        .modal-overlay.active {
+            display: flex;
+            opacity: 1;
+        }
+        .modal-container {
+            max-width: 440px;
+            width: 88%;
+            background: rgba(18, 22, 32, 0.92);
+            backdrop-filter: blur(28px);
+            border-radius: 42px;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            box-shadow: 0 30px 50px rgba(0, 0, 0, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.08);
+            padding: 0px;
+            transform: scale(0.96);
+            transition: transform 0.2s cubic-bezier(0.2, 0.9, 0.4, 1.1);
+            overflow: hidden;
+        }
+        .modal-overlay.active .modal-container {
+            transform: scale(1);
+        }
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 24px 12px 24px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        .modal-header h3 {
+            font-size: 1.6rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, #fff, #8bb9ff);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            letter-spacing: -0.3px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .modal-close {
+            width: 34px;
+            height: 34px;
+            border-radius: 30px;
+            background: rgba(255, 255, 255, 0.12);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: 0.2s;
+            font-size: 1.2rem;
+            color: #ddd;
+        }
+        .modal-close:hover {
+            background: rgba(255, 255, 255, 0.3);
+            transform: rotate(90deg);
+        }
+        .accounts-list {
+            padding: 12px 16px 20px 16px;
+            max-height: 450px;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+        .account-item {
+            background: rgba(255, 255, 255, 0.06);
+            backdrop-filter: blur(4px);
+            border-radius: 28px;
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            padding: 12px 18px;
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            transition: all 0.2s ease;
+            cursor: pointer;
+        }
+        .account-item:hover {
+            background: rgba(255, 255, 255, 0.2);
+            border-color: rgba(90, 150, 255, 0.7);
+            transform: translateX(6px);
+        }
+        .account-icon {
+            width: 48px;
+            height: 48px;
+            background: linear-gradient(145deg, #1b2a3f, #0e1a2a);
+            border-radius: 28px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            border: 1px solid rgba(102, 192, 244, 0.4);
+            overflow: hidden;
+        }
+        .account-icon img {
+            width: 70%;
+            height: 70%;
+            object-fit: contain;
+            display: block;
+        }
+        .account-icon i, .account-icon .fa, .account-icon .fas, .account-icon .fab {
+            font-size: 1.8rem;
+            color: #66c0f4;
+        }
+        .account-icon:has(> :not(img)) {
+            font-size: 1.8rem;
+            color: #66c0f4;
+        }
+        .account-info {
+            flex: 1;
+            text-align: left;
+        }
+        .account-name {
+            font-weight: 700;
+            font-size: 1.05rem;
+            color: #ffffff;
+            letter-spacing: -0.2px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+        .account-badge {
+            background: rgba(102, 192, 244, 0.25);
+            font-size: 0.65rem;
+            padding: 2px 8px;
+            border-radius: 40px;
+            color: #aad0ff;
+            font-weight: normal;
+        }
+        .account-desc {
+            font-size: 0.7rem;
+            color: #aac8ff;
+            margin-top: 4px;
+            opacity: 0.9;
+        }
+        .account-arrow {
+            color: #7f9fcf;
+            font-size: 1rem;
+            transition: transform 0.15s;
+        }
+        .account-item:hover .account-arrow {
+            transform: translateX(4px);
+            color: white;
+        }
+        .modal-footer {
+            padding: 12px 24px 20px 24px;
+            border-top: 1px solid rgba(255, 255, 255, 0.08);
+            display: flex;
+            justify-content: center;
+        }
+        .cancel-btn {
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 40px;
+            padding: 8px 22px;
+            font-size: 0.85rem;
+            font-weight: 500;
+            color: #ddd;
+            cursor: pointer;
+            transition: 0.2s;
+            width: auto;
+        }
+        .cancel-btn:hover {
+            background: rgba(255, 255, 255, 0.25);
+            transform: translateY(-2px);
+        }
+        .accounts-list::-webkit-scrollbar {
+            width: 4px;
+        }
+        .accounts-list::-webkit-scrollbar-track {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 10px;
+        }
+        .accounts-list::-webkit-scrollbar-thumb {
+            background: rgba(255, 255, 255, 0.3);
+            border-radius: 10px;
+        }
         @media screen and (max-width: 680px) {
-            body {
-                padding: 12px;
-            }
-            .glass-panel {
-                padding: 20px 14px 28px;
-                border-radius: 36px;
-            }
-            .avatar {
-                width: 70px;
-                height: 70px;
-                margin-bottom: 12px;
-            }
-            .main-id {
-                font-size: 1.9rem;
-                margin-bottom: 16px;
-            }
-            .music-card {
-                display: inline-flex;
-                flex-direction: row;
-                align-items: center;
-                justify-content: flex-start;
-                gap: 10px;
-                padding: 8px 14px;
-                border-radius: 28px;
-                margin-bottom: 20px;
-                width: auto;
-                margin-left: auto;
-                margin-right: auto;
-            }
-            .music-card .music-left {
-                flex-shrink: 0;
-            }
-            .music-mini-cover {
-                width: 44px;
-                height: 44px;
-                border-radius: 12px;
-            }
-            .music-info-stack {
-                flex: 0 1 auto;
-                display: flex;
-                flex-direction: column;
-                gap: 6px;
-                min-width: 0;
-            }
-            .music-title-row {
-                display: flex;
-                align-items: center;
-                gap: 5px;
-            }
-            .music-title-row .music-mini-icon {
-                font-size: 0.75rem;
-                color: #7c9eff;
-            }
-            .music-title-row span {
-                font-size: 0.85rem;
-                font-weight: 600;
-                color: #fff;
-                white-space: nowrap;
-                overflow: hidden;
-                text-overflow: ellipsis;
-            }
-            .volume-row {
-                display: flex;
-                align-items: center;
-                gap: 8px;
-                background: rgba(20, 30, 45, 0.7);
-                border-radius: 32px;
-                padding: 3px 10px;
-                width: fit-content;
-                max-width: 100%;
-            }
-            .volume-row i {
-                font-size: 0.75rem;
-                color: #c8d6ff;
-                cursor: pointer;
-                width: 22px;
-                text-align: center;
-            }
-            .volume-row .volume-slider {
-                width: 90px;
-                height: 3px;
-            }
-            .volume-row .volume-slider::-webkit-slider-thumb {
-                width: 12px;
-                height: 12px;
-            }
-            .volume-row .volume-percent {
-                font-size: 0.65rem;
-                min-width: 32px;
-            }
-            .desktop-only-info, .desktop-volume {
-                display: none;
-            }
-            .uid-nav-block {
-                display: flex;
-                flex-wrap: wrap;
-                justify-content: center;
-                gap: 14px;
-                margin-bottom: 24px;
-            }
-            .uid-item {
-                width: 85px;
-                padding: 10px 4px;
-                border-radius: 20px;
-            }
-            .uid-img {
-                width: 32px;
-                height: 32px;
-                margin-bottom: 6px;
-            }
-            .uid-item span {
-                font-size: 0.7rem;
-            }
-            .link-buttons {
-                gap: 10px;
-            }
-            .link-buttons a {
-                padding: 5px 12px;
-                font-size: 0.7rem;
-            }
+            body { padding: 12px; }
+            .glass-panel { padding: 20px 14px 28px; border-radius: 36px; }
+            .avatar { width: 70px; height: 70px; margin-bottom: 12px; }
+            .main-id { font-size: 1.9rem; margin-bottom: 16px; }
+            .music-card { display: inline-flex; flex-direction: row; align-items: center; justify-content: flex-start; gap: 10px; padding: 8px 14px; border-radius: 28px; margin-bottom: 20px; width: auto; margin-left: auto; margin-right: auto; }
+            .music-card .music-left { flex-shrink: 0; }
+            .music-mini-cover { width: 44px; height: 44px; border-radius: 12px; }
+            .music-info-stack { flex: 0 1 auto; display: flex; flex-direction: column; gap: 6px; min-width: 0; }
+            .music-title-row { display: flex; align-items: center; gap: 5px; }
+            .music-title-row .music-mini-icon { font-size: 0.75rem; color: #7c9eff; }
+            .music-title-row span { font-size: 0.85rem; font-weight: 600; color: #fff; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+            .volume-row { display: flex; align-items: center; gap: 8px; background: rgba(20, 30, 45, 0.7); border-radius: 32px; padding: 3px 10px; width: fit-content; max-width: 100%; }
+            .volume-row i { font-size: 0.75rem; color: #c8d6ff; cursor: pointer; width: 22px; text-align: center; }
+            .volume-row .volume-slider { width: 90px; height: 3px; }
+            .volume-row .volume-slider::-webkit-slider-thumb { width: 12px; height: 12px; }
+            .volume-row .volume-percent { font-size: 0.65rem; min-width: 32px; }
+            .desktop-only-info, .desktop-volume { display: none; }
+            .uid-nav-block { gap: 14px; margin-bottom: 24px; }
+            .uid-item { width: 85px; padding: 10px 4px; }
+            .uid-img { width: 32px; height: 32px; margin-bottom: 6px; }
+            .uid-item span { font-size: 0.7rem; }
+            .link-buttons { gap: 10px; }
+            .link-buttons a { padding: 5px 12px; font-size: 0.7rem; }
+            .modal-container { width: 92%; }
+            .modal-header h3 { font-size: 1.4rem; }
+            .account-icon { width: 42px; height: 42px; }
+            .account-icon img { width: 70%; height: 70%; }
+            .account-name { font-size: 0.9rem; }
+            .account-badge { font-size: 0.6rem; }
         }
         @media screen and (max-width: 480px) {
-            .glass-panel {
-                padding: 18px 12px 24px;
-            }
-            .avatar {
-                width: 64px;
-                height: 64px;
-            }
-            .main-id {
-                font-size: 1.7rem;
-            }
-            .music-mini-cover {
-                width: 40px;
-                height: 40px;
-            }
-            .volume-row .volume-slider {
-                width: 75px;
-            }
-            .uid-item {
-                width: 75px;
-                padding: 8px 2px;
-            }
-            .uid-img {
-                width: 28px;
-                height: 28px;
-            }
-            .link-buttons a {
-                padding: 4px 10px;
-                font-size: 0.65rem;
-            }
+            .glass-panel { padding: 18px 12px 24px; }
+            .avatar { width: 64px; height: 64px; }
+            .main-id { font-size: 1.7rem; }
+            .uid-item { width: 75px; padding: 8px 2px; }
+            .uid-img { width: 28px; height: 28px; }
+            .account-icon { width: 38px; height: 38px; }
+            .account-icon img { width: 65%; height: 65%; }
         }
     </style>
 </head>
@@ -418,7 +498,7 @@
             </div>
         </div>
         
-        <div class="music-info-stack mobile-stack">
+        <div class="music-info-stack mobile-stack" style="display: none;">
             <div class="music-title-row">
                 <i class="fas fa-headphones music-mini-icon"></i>
                 <span>Hotel Party</span>
@@ -439,10 +519,10 @@
     <audio id="hiddenAudio" src="Crash+Adams+-+Hotel+Party.mp3" loop preload="auto"></audio>
 
     <div class="uid-nav-block">
-        <a href="https://steamcommunity.com/profiles/76561199866924921/" target="_blank" rel="noopener noreferrer" class="uid-item">
+        <div class="uid-item" id="steamCardTrigger">
             <img src="steam.png" alt="Steam" class="uid-img" onerror="this.onerror=null; this.src='https://placehold.co/36x36?text=S';">
             <span>Steam</span>
-        </a>
+        </div>
         <a href="https://www.youtube.com/@NoraSemi" target="_blank" rel="noopener noreferrer" class="uid-item">
             <img src="youtube.png" alt="YouTube" class="uid-img" onerror="this.onerror=null; this.src='https://placehold.co/36x36?text=YT';">
             <span>YouTube</span>
@@ -470,7 +550,43 @@
     </div>
 </div>
 
+<div id="steamModalOverlay" class="modal-overlay">
+    <div class="modal-container">
+        <div class="modal-header">
+            <h3><i class="fab fa-steam"></i> Switch Steam Account</h3>
+            <div class="modal-close" id="modalCloseBtn">
+                <i class="fas fa-times"></i>
+            </div>
+        </div>
+        <div class="accounts-list" id="accountsListContainer"></div>
+        <div class="modal-footer">
+            <button class="cancel-btn" id="modalCancelBtn">Cancel</button>
+        </div>
+    </div>
+</div>
+
 <script>
+    const STEAM_ACCOUNTS = [
+        {
+            name: "Main Account",
+            description: "Melatonin",
+            url: "https://steamcommunity.com/profiles/76561199866924921/",
+            iconFallback: '<img src="Melatonin.png" alt="Melatonin">'
+        },
+        {
+            name: "Secondary Main Account",
+            description: "Gamesense; Melatonin",
+            url: "https://steamcommunity.com/profiles/76561199348300736/",
+            iconFallback: '<img src="Gamesense.png" alt="Gamesense">'
+        },
+        {
+            name: "Secondary Account",
+            description: "Gamesense; Melatonin; ExitScam; Midnight",
+            url: "https://steamcommunity.com/profiles/76561199514027255/",
+            iconFallback: '<img src="ExitScam.png" alt="ExitScam">'
+        }
+    ];
+
     (function() {
         const starConfig = {
             starCount: window.innerWidth < 768 ? 80 : 150,
@@ -566,22 +682,8 @@
         let isHolding = false;
         const titleElem = document.querySelector('title');
         if (!titleElem) return;
-
-        function stopAnimation() {
-            if (timer) {
-                clearTimeout(timer);
-                timer = null;
-            }
-        }
-
-        function startTyping() {
-            stopAnimation();
-            currentIndex = 0;
-            isHolding = false;
-            titleElem.innerText = "";
-            stepTyping();
-        }
-
+        function stopAnimation() { if (timer) { clearTimeout(timer); timer = null; } }
+        function startTyping() { stopAnimation(); currentIndex = 0; isHolding = false; titleElem.innerText = ""; stepTyping(); }
         function stepTyping() {
             if (isHolding) return;
             if (currentIndex < fullText.length) {
@@ -590,9 +692,7 @@
                 timer = setTimeout(stepTyping, typeInterval);
             } else {
                 isHolding = true;
-                timer = setTimeout(() => {
-                    startTyping();
-                }, holdTime);
+                timer = setTimeout(() => { startTyping(); }, holdTime);
             }
         }
         startTyping();
@@ -602,12 +702,8 @@
         const panel = document.getElementById('tiltPanel');
         if (!panel) return;
         let active = true;
-        let mouseMoveHandler = null;
-        let mouseLeaveHandler = null;
-        
-        const maxRotateX = 5;
-        const maxRotateY = 5;
-        
+        let mouseMoveHandler = null, mouseLeaveHandler = null;
+        const maxRotateX = 5, maxRotateY = 5;
         function handleMouseMove(e) {
             if (!active) return;
             const rect = panel.getBoundingClientRect();
@@ -621,42 +717,10 @@
             const rotX = -offsetY * maxRotateX;
             panel.style.transform = `rotateX(${rotX}deg) rotateY(${rotY}deg)`;
         }
-        
-        function resetTilt() {
-            panel.style.transform = 'rotateX(0deg) rotateY(0deg)';
-        }
-        
-        function enableTilt() {
-            if (mouseMoveHandler) document.removeEventListener('mousemove', mouseMoveHandler);
-            if (mouseLeaveHandler) document.removeEventListener('mouseleave', mouseLeaveHandler);
-            mouseMoveHandler = handleMouseMove;
-            mouseLeaveHandler = resetTilt;
-            document.addEventListener('mousemove', mouseMoveHandler);
-            document.addEventListener('mouseleave', mouseLeaveHandler);
-            active = true;
-        }
-        
-        function disableTilt() {
-            if (mouseMoveHandler) {
-                document.removeEventListener('mousemove', mouseMoveHandler);
-                document.removeEventListener('mouseleave', mouseLeaveHandler);
-                mouseMoveHandler = null;
-                mouseLeaveHandler = null;
-            }
-            resetTilt();
-            active = false;
-        }
-        
-        function checkMobileAndAdjust() {
-            const isMobile = ('ontouchstart' in window) || (navigator.maxTouchPoints > 0) || window.innerWidth <= 768;
-            if (isMobile) {
-                disableTilt();
-            } else {
-                if (!active) enableTilt();
-                else if (!mouseMoveHandler) enableTilt();
-            }
-        }
-        
+        function resetTilt() { panel.style.transform = 'rotateX(0deg) rotateY(0deg)'; }
+        function enableTilt() { if (mouseMoveHandler) document.removeEventListener('mousemove', mouseMoveHandler); if (mouseLeaveHandler) document.removeEventListener('mouseleave', mouseLeaveHandler); mouseMoveHandler = handleMouseMove; mouseLeaveHandler = resetTilt; document.addEventListener('mousemove', mouseMoveHandler); document.addEventListener('mouseleave', mouseLeaveHandler); active = true; }
+        function disableTilt() { if (mouseMoveHandler) { document.removeEventListener('mousemove', mouseMoveHandler); document.removeEventListener('mouseleave', mouseLeaveHandler); mouseMoveHandler = null; mouseLeaveHandler = null; } resetTilt(); active = false; }
+        function checkMobileAndAdjust() { const isMobile = ('ontouchstart' in window) || (navigator.maxTouchPoints > 0) || window.innerWidth <= 768; if (isMobile) disableTilt(); else { if (!active) enableTilt(); else if (!mouseMoveHandler) enableTilt(); } }
         window.addEventListener('resize', checkMobileAndAdjust);
         checkMobileAndAdjust();
     })();
@@ -669,75 +733,31 @@
         const mobileSlider = document.getElementById('volumeSliderMobile');
         const mobilePercent = document.getElementById('volumePercentMobile');
         const mobileIcon = document.getElementById('volumeIconMobile');
-
         let savedVolume = localStorage.getItem('musicVolume');
-        if (savedVolume !== null && !isNaN(parseFloat(savedVolume))) {
-            savedVolume = Math.min(1, Math.max(0, parseFloat(savedVolume)));
-        } else {
-            savedVolume = 0.20;
-        }
+        if (savedVolume !== null && !isNaN(parseFloat(savedVolume))) savedVolume = Math.min(1, Math.max(0, parseFloat(savedVolume)));
+        else savedVolume = 0.20;
         audio.volume = savedVolume;
-
         function updateAllUI(vol) {
             const percent = Math.round(vol * 100) + '%';
             if (desktopSlider) desktopSlider.value = vol;
             if (desktopPercent) desktopPercent.innerText = percent;
             if (mobileSlider) mobileSlider.value = vol;
             if (mobilePercent) mobilePercent.innerText = percent;
-            
             const iconClass = vol <= 0 ? 'fas fa-volume-mute' : (vol < 0.5 ? 'fas fa-volume-down' : 'fas fa-volume-up');
             if (desktopIcon) desktopIcon.className = iconClass;
             if (mobileIcon) mobileIcon.className = iconClass;
         }
-
-        function handleVolumeChange(val) {
-            audio.volume = val;
-            updateAllUI(val);
-            localStorage.setItem('musicVolume', val);
-        }
-
-        if (desktopSlider) {
-            desktopSlider.addEventListener('input', (e) => handleVolumeChange(parseFloat(e.target.value)));
-            desktopSlider.addEventListener('touchstart', (e) => e.stopPropagation());
-        }
-        if (mobileSlider) {
-            mobileSlider.addEventListener('input', (e) => handleVolumeChange(parseFloat(e.target.value)));
-            mobileSlider.addEventListener('touchstart', (e) => e.stopPropagation());
-        }
-
+        function handleVolumeChange(val) { audio.volume = val; updateAllUI(val); localStorage.setItem('musicVolume', val); }
+        if (desktopSlider) desktopSlider.addEventListener('input', (e) => handleVolumeChange(parseFloat(e.target.value)));
+        if (mobileSlider) mobileSlider.addEventListener('input', (e) => handleVolumeChange(parseFloat(e.target.value)));
         function toggleMute() {
-            if (audio.volume > 0) {
-                localStorage.setItem('musicVolume_beforeMute', audio.volume);
-                handleVolumeChange(0);
-            } else {
-                let lastVol = localStorage.getItem('musicVolume_beforeMute');
-                let newVol = (lastVol && !isNaN(parseFloat(lastVol))) ? parseFloat(lastVol) : 0.20;
-                handleVolumeChange(newVol);
-            }
+            if (audio.volume > 0) { localStorage.setItem('musicVolume_beforeMute', audio.volume); handleVolumeChange(0); }
+            else { let lastVol = localStorage.getItem('musicVolume_beforeMute'); let newVol = (lastVol && !isNaN(parseFloat(lastVol))) ? parseFloat(lastVol) : 0.20; handleVolumeChange(newVol); }
         }
-
-        if (desktopIcon) {
-            desktopIcon.style.cursor = 'pointer';
-            desktopIcon.addEventListener('click', toggleMute);
-        }
-        if (mobileIcon) {
-            mobileIcon.style.cursor = 'pointer';
-            mobileIcon.addEventListener('click', toggleMute);
-        }
-
+        if (desktopIcon) { desktopIcon.style.cursor = 'pointer'; desktopIcon.addEventListener('click', toggleMute); }
+        if (mobileIcon) { mobileIcon.style.cursor = 'pointer'; mobileIcon.addEventListener('click', toggleMute); }
         updateAllUI(savedVolume);
-        
-        function attemptAutoPlay() {
-            audio.play().then(() => {}).catch(() => {
-                const startOnInteraction = function() {
-                    audio.play().catch(e => console.warn('playback resume:', e));
-                    document.removeEventListener('click', startOnInteraction);
-                    document.removeEventListener('touchstart', startOnInteraction);
-                };
-                document.addEventListener('click', startOnInteraction);
-                document.addEventListener('touchstart', startOnInteraction);
-            });
-        }
+        function attemptAutoPlay() { audio.play().catch(() => { const startOnInteraction = function() { audio.play().catch(e=>console.warn(e)); document.removeEventListener('click', startOnInteraction); document.removeEventListener('touchstart', startOnInteraction); }; document.addEventListener('click', startOnInteraction); document.addEventListener('touchstart', startOnInteraction); }); }
         window.addEventListener('load', attemptAutoPlay);
     })();
 
@@ -752,6 +772,85 @@
     }
     window.addEventListener('resize', toggleLayoutByWidth);
     toggleLayoutByWidth();
+
+    (function initMultiSteamModal() {
+        const steamTrigger = document.getElementById('steamCardTrigger');
+        const modalOverlay = document.getElementById('steamModalOverlay');
+        const closeBtn = document.getElementById('modalCloseBtn');
+        const cancelBtn = document.getElementById('modalCancelBtn');
+        const accountsContainer = document.getElementById('accountsListContainer');
+        
+        if (!steamTrigger || !modalOverlay || !accountsContainer) return;
+
+        function renderAccountsList() {
+            accountsContainer.innerHTML = '';
+            STEAM_ACCOUNTS.forEach((account) => {
+                const itemDiv = document.createElement('div');
+                itemDiv.className = 'account-item';
+                itemDiv.addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    if (account.url && account.url.trim() !== '') {
+                        window.open(account.url, '_blank', 'noopener,noreferrer');
+                        hideModal();
+                    } else {
+                        console.warn('Steam profile URL not configured for this account.');
+                    }
+                });
+                const iconDiv = document.createElement('div');
+                iconDiv.className = 'account-icon';
+                if (account.iconFallback) {
+                    if (account.iconFallback.trim().startsWith('<img')) {
+                        iconDiv.innerHTML = account.iconFallback;
+                    } else {
+                        iconDiv.innerHTML = account.iconFallback;
+                    }
+                } else {
+                    iconDiv.innerHTML = '<i class="fab fa-steam"></i>';
+                }
+                const infoDiv = document.createElement('div');
+                infoDiv.className = 'account-info';
+                const nameSpan = document.createElement('div');
+                nameSpan.className = 'account-name';
+                nameSpan.innerHTML = `${account.name} ${account.badge ? `<span class="account-badge">${account.badge}</span>` : ''}`;
+                const descSpan = document.createElement('div');
+                descSpan.className = 'account-desc';
+                descSpan.innerText = account.description || (account.badge ? `Steam profile` : 'Click to open profile');
+                infoDiv.appendChild(nameSpan);
+                infoDiv.appendChild(descSpan);
+                const arrowSpan = document.createElement('div');
+                arrowSpan.className = 'account-arrow';
+                arrowSpan.innerHTML = '<i class="fas fa-chevron-right"></i>';
+                itemDiv.appendChild(iconDiv);
+                itemDiv.appendChild(infoDiv);
+                itemDiv.appendChild(arrowSpan);
+                accountsContainer.appendChild(itemDiv);
+            });
+        }
+
+        function showModal() {
+            renderAccountsList();
+            modalOverlay.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+        function hideModal() {
+            modalOverlay.classList.remove('active');
+            document.body.style.overflow = '';
+        }
+        steamTrigger.addEventListener('click', (e) => {
+            e.preventDefault();
+            e.stopPropagation();
+            showModal();
+        });
+        if (closeBtn) closeBtn.addEventListener('click', hideModal);
+        if (cancelBtn) cancelBtn.addEventListener('click', hideModal);
+        modalOverlay.addEventListener('click', (e) => {
+            if (e.target === modalOverlay) hideModal();
+        });
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape' && modalOverlay.classList.contains('active')) hideModal();
+        });
+        renderAccountsList();
+    })();
 </script>
 </body>
 </html>
