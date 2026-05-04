@@ -433,6 +433,33 @@
             background: rgba(255, 255, 255, 0.3);
             border-radius: 10px;
         }
+        /* Melatonin modal note styling (info below the header) */
+        .mel-modal-note {
+            background: rgba(80, 120, 200, 0.18);
+            backdrop-filter: blur(8px);
+            margin: 12px 20px 0 20px;
+            padding: 12px 16px;
+            border-radius: 28px;
+            border-left: 3px solid #6c8eff;
+            border-right: 1px solid rgba(255,255,255,0.1);
+            font-size: 0.8rem;
+            color: #e0ecff;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            text-align: left;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+            transition: all 0.2s ease;
+        }
+        .mel-modal-note i {
+            font-size: 1.1rem;
+            color: #9bbbff;
+            flex-shrink: 0;
+        }
+        .mel-modal-note span {
+            line-height: 1.4;
+            font-weight: 450;
+        }
         @media screen and (max-width: 680px) {
             body { padding: 12px; }
             .glass-panel { padding: 20px 14px 28px; border-radius: 36px; }
@@ -463,6 +490,14 @@
             .account-icon img { width: 70%; height: 70%; }
             .account-name { font-size: 0.9rem; }
             .account-badge { font-size: 0.6rem; }
+            .mel-modal-note {
+                margin: 10px 16px 0 16px;
+                padding: 10px 12px;
+                font-size: 0.75rem;
+            }
+            .mel-modal-note i {
+                font-size: 1rem;
+            }
         }
         @media screen and (max-width: 480px) {
             .glass-panel { padding: 18px 12px 24px; }
@@ -472,6 +507,10 @@
             .uid-img { width: 28px; height: 28px; }
             .account-icon { width: 38px; height: 38px; }
             .account-icon img { width: 65%; height: 65%; }
+            .mel-modal-note {
+                margin: 8px 12px 0 12px;
+                padding: 8px 12px;
+            }
         }
         .modal-header h3 img {
             width: 1.4rem;
@@ -581,6 +620,10 @@
             <div class="modal-close" id="melatoninModalClose">
                 <i class="fas fa-times"></i>
             </div>
+        </div>
+        <div class="mel-modal-note">
+            <i class="fas fa-info-circle"></i>
+            <span>Plz check ur screen refresh rate and adjust it in the "Misc" settings, as it may be affecting the aimbot.</span>
         </div>
         <div class="accounts-list" id="melatoninAccountsList"></div>
         <div class="modal-footer">
