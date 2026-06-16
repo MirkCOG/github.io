@@ -582,6 +582,10 @@
             <img src="melatonin.png" alt="Melatonin" class="uid-img" onerror="this.onerror=null; this.src='https://placehold.co/36x36?text=MT';">
             <span>Melatonin</span>
         </a>
+        <a href="https://umbra.top/forum/index.php?members/mirkcog.1004/" target="_blank" rel="noopener noreferrer" class="uid-item">
+            <img src="umbra.png" alt="Umbra" class="uid-img" onerror="this.onerror=null; this.src='https://placehold.co/36x36?text=UM';">
+            <span>Umbra</span>
+        </a>
         <a href="https://exitscam.cc/profile.php?id=437" target="_blank" rel="noopener noreferrer" class="uid-item">
             <img src="ExitScam.png" alt="ExitScam" class="uid-img" onerror="this.onerror=null; this.src='https://placehold.co/36x36?text=ES';">
             <span>ExitScam</span>
@@ -592,10 +596,12 @@
         <a href="CS2 SETTING.txt" target="_blank" rel="noopener noreferrer">CS2 Setting</a>
         <a href="#" id="gamesenseConfigTrigger">Gamesense Config</a>
         <a href="#" id="melatoninConfigTrigger">Melatonin Config</a>
+        <a href="#" id="umbraConfigTrigger">Umbra Config</a>
         <a href="ExitScam Legit Config.cfg" target="_blank" rel="noopener noreferrer">ExitScam Config</a>
     </div>
 </div>
 
+<!-- Steam Modal -->
 <div id="steamModalOverlay" class="modal-overlay">
     <div class="modal-container">
         <div class="modal-header">
@@ -611,6 +617,7 @@
     </div>
 </div>
 
+<!-- Melatonin Modal -->
 <div id="melatoninModalOverlay" class="modal-overlay">
     <div class="modal-container">
         <div class="modal-header">
@@ -632,6 +639,7 @@
     </div>
 </div>
 
+<!-- Gamesense Modal -->
 <div id="gamesenseModalOverlay" class="modal-overlay">
     <div class="modal-container">
         <div class="modal-header">
@@ -645,6 +653,24 @@
         <div class="accounts-list" id="gamesenseAccountsList"></div>
         <div class="modal-footer">
             <button class="cancel-btn" id="gamesenseModalCancel">Close</button>
+        </div>
+    </div>
+</div>
+
+<!-- Umbra Modal -->
+<div id="umbraModalOverlay" class="modal-overlay">
+    <div class="modal-container">
+        <div class="modal-header">
+            <h3>
+                <img src="umbra.png" alt="Umbra"> Umbra Config
+            </h3>
+            <div class="modal-close" id="umbraeModalClose">
+                <i class="fas fa-times"></i>
+            </div>
+        </div>
+        <div class="accounts-list" id="umbraAccountsList"></div>
+        <div class="modal-footer">
+            <button class="cancel-btn" id="umbraModalCancel">Close</button>
         </div>
     </div>
 </div>
@@ -836,6 +862,7 @@
     window.addEventListener('resize', toggleLayoutByWidth);
     toggleLayoutByWidth();
 
+    // ---------- STEAM ----------
     const STEAM_ACCOUNTS = [
         { name: "Main Account", description: "Melatonin", url: "https://steamcommunity.com/profiles/76561199866924921/", iconFallback: '<img src="melatonin.png" alt="MT">' },
         { name: "Secondary Main Account", description: "Gamesense; Melatonin", url: "https://steamcommunity.com/profiles/76561199348300736/", iconFallback: '<img src="steamGs.png" alt="GS">' },
@@ -864,6 +891,7 @@
     document.getElementById('modalCancelBtn')?.addEventListener('click', hideSteamModal);
     steamModal?.addEventListener('click', (e) => { if(e.target === steamModal) hideSteamModal(); });
 
+    // ---------- MELATONIN ----------
     const MELATONIN_CONFIGS = [
         { name: "Legit Config", url: "Melatonin Legit Config.txt", icon: '<i class="fas fa-life-ring"></i>' },
         { name: "Helper", url: "Melatonin Helper.txt", icon: '<i class="fas fa-cog"></i>' }
@@ -891,6 +919,7 @@
     document.getElementById('melatoninModalCancel')?.addEventListener('click', hideMelatoninModal);
     melatoninModal?.addEventListener('click', (e) => { if(e.target === melatoninModal) hideMelatoninModal(); });
 
+    // ---------- GAMESENSE ----------
     const GAMESENSE_CONFIGS = [
         { name: "Legit Config", url: "gamesense legit.txt", icon: '<i class="fas fa-life-ring"></i>' },
         { name: "Visual Config", url: "gsmt.txt", icon: '<i class="fas fa-life-ring"></i>' }
@@ -918,6 +947,58 @@
     document.getElementById('gamesenseModalCancel')?.addEventListener('click', hideGamesenseModal);
     gamesenseModal?.addEventListener('click', (e) => { if(e.target === gamesenseModal) hideGamesenseModal(); });
 
+    // ---------- UMBRA ----------
+    const UMBRA_CONFIGS = [
+        { name: "Legit Config", url: "umbra legit config.txt", icon: '<i class="fas fa-life-ring"></i>' },
+        // { name: "Helper Config", url: "umbra helper.txt", icon: '<i class="fas fa-cog"></i>' },
+    ];
+    function renderUmbraConfigs() {
+        const container = document.getElementById('umbraAccountsList');
+        if (!container) return;
+        container.innerHTML = '';
+        UMBRA_CONFIGS.forEach(cfg => {
+            const div = document.createElement('div');
+            div.className = 'account-item';
+            div.addEventListener('click', () => {
+                if (cfg.url) window.open(cfg.url, '_blank');
+                hideUmbraModal();
+            });
+            const iconDiv = document.createElement('div');
+            iconDiv.className = 'account-icon';
+            iconDiv.innerHTML = cfg.icon || '<i class="fas fa-cog"></i>';
+            const infoDiv = document.createElement('div');
+            infoDiv.className = 'account-info';
+            infoDiv.innerHTML = `<div class="account-name">${cfg.name}</div>`;
+            const arrow = document.createElement('div');
+            arrow.className = 'account-arrow';
+            arrow.innerHTML = '<i class="fas fa-chevron-right"></i>';
+            div.appendChild(iconDiv);
+            div.appendChild(infoDiv);
+            div.appendChild(arrow);
+            container.appendChild(div);
+        });
+    }
+    const umbraModal = document.getElementById('umbraModalOverlay');
+    function showUmbraModal() {
+        renderUmbraConfigs();
+        umbraModal.classList.add('active');
+        document.body.style.overflow = 'hidden';
+    }
+    function hideUmbraModal() {
+        umbraModal.classList.remove('active');
+        document.body.style.overflow = '';
+    }
+    document.getElementById('umbraConfigTrigger')?.addEventListener('click', (e) => {
+        e.preventDefault();
+        showUmbraModal();
+    });
+    document.getElementById('umbraeModalClose')?.addEventListener('click', hideUmbraModal);
+    document.getElementById('umbraModalCancel')?.addEventListener('click', hideUmbraModal);
+    umbraModal?.addEventListener('click', (e) => {
+        if (e.target === umbraModal) hideUmbraModal();
+    });
+
+    // ---------- ESC KEY ----------
     document.addEventListener('keydown', (e) => {
         if (e.key !== 'Escape') return;
         const activeModal = document.querySelector('.modal-overlay.active');
