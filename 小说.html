@@ -1,0 +1,398 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>阅读器</title>
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body {
+            max-width: 850px;
+            margin: 0 auto;
+            padding: 30px 20px;
+            font-family: "Microsoft Yahei", sans-serif;
+            line-height: 1.8;
+            font-size: 17px;
+            color: #333;
+            background: #f7f6f2;
+        }
+        .search-bar {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 25px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid #e0e0e0;
+            position: sticky;
+            top: 0;
+            background: #f7f6f2;
+            z-index: 10;
+            padding-top: 10px;
+        }
+        .search-bar input {
+            flex: 1;
+            padding: 10px 14px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            font-size: 15px;
+            background: #fff;
+        }
+        .search-bar button {
+            padding: 0 22px;
+            border: none;
+            border-radius: 4px;
+            background: #4a90e2;
+            color: #fff;
+            cursor: pointer;
+            font-size: 15px;
+        }
+        .back-btn {
+            padding: 6px 14px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            background: #fff;
+            cursor: pointer;
+            font-size: 14px;
+            margin-bottom: 15px;
+        }
+        .section { display: none; }
+        .section.active { display: block; }
+
+        /* 搜索结果 */
+        .source-group { margin-bottom: 25px; }
+        .source-title {
+            font-size: 16px;
+            font-weight: bold;
+            color: #666;
+            margin-bottom: 10px;
+            padding-left: 8px;
+            border-left: 3px solid #4a90e2;
+        }
+        .book-item {
+            padding: 12px 15px;
+            background: #fff;
+            border-radius: 4px;
+            margin-bottom: 8px;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+        .book-item:hover { background: #eef5ff; }
+        .book-name { font-size: 16px; font-weight: bold; margin-bottom: 4px; }
+        .book-meta { font-size: 13px; color: #888; }
+
+        /* 目录列表 */
+        .chapter-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 8px;
+        }
+        .chapter-item {
+            padding: 8px 12px;
+            background: #fff;
+            border-radius: 4px;
+            font-size: 14px;
+            cursor: pointer;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+        .chapter-item:hover { background: #eef5ff; }
+
+        /* 阅读页 */
+        .reader-title {
+            font-size: 22px;
+            font-weight: bold;
+            text-align: center;
+            margin-bottom: 30px;
+            line-height: 1.4;
+        }
+        .reader-content p {
+            text-indent: 2em;
+            margin-bottom: 16px;
+        }
+        .tip {
+            text-align: center;
+            color: #999;
+            margin: 40px 0;
+            font-size: 14px;
+        }
+        .error { color: #e74c3c; }
+    </style>
+</head>
+<body>
+    <!-- 搜索栏 -->
+    <div class="search-bar">
+        <input type="text" id="searchInput" placeholder="输入小说名/关键词，回车搜索">
+        <button id="searchBtn">搜索</button>
+    </div>
+
+    <!-- 搜索结果区 -->
+    <div id="resultSection" class="section">
+        <button class="back-btn" onclick="showSection('search')">返回搜索</button>
+        <div id="resultList"></div>
+    </div>
+
+    <!-- 目录区 -->
+    <div id="catalogSection" class="section">
+        <button class="back-btn" onclick="showSection('result')">返回搜索结果</button>
+        <h2 id="bookTitle" style="margin-bottom: 15px;"></h2>
+        <div id="chapterList" class="chapter-grid"></div>
+    </div>
+
+    <!-- 阅读区 -->
+    <div id="readerSection" class="section">
+        <button class="back-btn" onclick="showSection('catalog')">返回目录</button>
+        <div class="reader-title" id="chapterTitle"></div>
+        <div class="reader-content" id="readerContent"></div>
+        <div class="tip" id="readerTip"></div>
+    </div>
+
+    <div id="searchTip" class="tip">输入关键词开始搜索，支持两个站点同时检索</div>
+
+    <script>
+        // ========== 站点配置 ==========
+        const SITES = [
+            {
+                name: "爱书包 (ishubao.org)",
+                baseUrl: "https://www.ishubao.org",
+                searchUrl: "https://www.ishubao.org/search.php?keyword=",
+                encoding: "utf-8",
+                searchItemSelector: ".search-list li",
+                bookNameSelector: "h3 a",
+                bookUrlSelector: "h3 a",
+                bookAuthorSelector: ".author",
+                chapterSelector: "#list dd a",
+                contentSelector: "#content",
+            },
+            {
+                name: "skynan.com",
+                baseUrl: "https://www.skynan.com",
+                searchUrl: "https://www.skynan.com/search.php?keyword=",
+                encoding: "gbk",
+                searchItemSelector: ".search-result li",
+                bookNameSelector: ".title a",
+                bookUrlSelector: ".title a",
+                bookAuthorSelector: ".info",
+                chapterSelector: ".chapterlist dd a",
+                contentSelector: "#content",
+            }
+        ];
+
+        // ========== 多CORS代理列表，自动按顺序重试 ==========
+        const PROXY_LIST = [
+            {
+                name: "corsproxy.io",
+                build: (url) => `https://corsproxy.io/?url=${encodeURIComponent(url)}`
+            },
+            {
+                name: "corsfix",
+                build: (url) => `https://proxy.corsfix.com/?${url}`
+            },
+            {
+                name: "allorigins",
+                build: (url) => `https://api.allorigins.win/raw?url=${encodeURIComponent(url)}`
+            }
+        ];
+
+        // ========== 工具函数：带代理重试的请求 ==========
+        async function fetchPage(url, encoding = "utf-8") {
+            let lastError = null;
+            // 依次尝试每个代理
+            for (const proxy of PROXY_LIST) {
+                try {
+                    const proxyUrl = proxy.build(url);
+                    const res = await fetch(proxyUrl);
+                    if (!res.ok) throw new Error(`HTTP ${res.status}`);
+                    const buffer = await res.arrayBuffer();
+                    return new TextDecoder(encoding).decode(buffer);
+                } catch (err) {
+                    lastError = err;
+                    console.warn(`代理 ${proxy.name} 失败，尝试下一个`, err.message);
+                }
+            }
+            // 所有代理都失败
+            throw new Error("所有代理均请求失败：" + lastError.message);
+        }
+
+        // 相对路径转绝对URL
+        function toAbsoluteUrl(base, relative) {
+            if (!relative) return "";
+            if (relative.startsWith("http")) return relative;
+            return new URL(relative, base).href;
+        }
+
+        // 切换显示区域
+        function showSection(name) {
+            document.querySelectorAll(".section").forEach(s => s.classList.remove("active"));
+            document.getElementById("searchTip").style.display = "none";
+            if (name === "search") {
+                document.getElementById("searchTip").style.display = "block";
+                return;
+            }
+            document.getElementById(name + "Section").classList.add("active");
+        }
+
+        // ========== 1. 搜索功能 ==========
+        async function doSearch() {
+            const keyword = document.getElementById("searchInput").value.trim();
+            if (!keyword) return;
+
+            const resultList = document.getElementById("resultList");
+            resultList.innerHTML = '<div class="tip">正在双站搜索中...</div>';
+            showSection("result");
+
+            const results = await Promise.allSettled(
+                SITES.map(site => searchSite(site, keyword))
+            );
+
+            resultList.innerHTML = "";
+            results.forEach((res, idx) => {
+                const site = SITES[idx];
+                const group = document.createElement("div");
+                group.className = "source-group";
+
+                const title = document.createElement("div");
+                title.className = "source-title";
+                title.textContent = site.name;
+                group.appendChild(title);
+
+                if (res.status === "fulfilled" && res.value.length > 0) {
+                    res.value.forEach(book => {
+                        const item = document.createElement("div");
+                        item.className = "book-item";
+                        item.innerHTML = `
+                            <div class="book-name">${book.name}</div>
+                            <div class="book-meta">${book.author || "未知作者"}</div>
+                        `;
+                        item.onclick = () => loadCatalog(site, book);
+                        group.appendChild(item);
+                    });
+                } else {
+                    const empty = document.createElement("div");
+                    empty.className = "tip error";
+                    empty.textContent = res.status === "rejected" 
+                        ? "搜索失败：" + res.reason.message 
+                        : "未找到相关书籍";
+                    group.appendChild(empty);
+                }
+                resultList.appendChild(group);
+            });
+        }
+
+        // 单个站点搜索
+        async function searchSite(site, keyword) {
+            const html = await fetchPage(site.searchUrl + encodeURIComponent(keyword), site.encoding);
+            const parser = new DOMParser();
+            const doc = parser.parseFromString(html, "text/html");
+
+            const items = doc.querySelectorAll(site.searchItemSelector);
+            const books = [];
+            items.forEach(item => {
+                const nameEl = item.querySelector(site.bookNameSelector);
+                const urlEl = item.querySelector(site.bookUrlSelector);
+                const authorEl = item.querySelector(site.bookAuthorSelector);
+                if (nameEl && urlEl) {
+                    books.push({
+                        name: nameEl.textContent.trim(),
+                        url: toAbsoluteUrl(site.baseUrl, urlEl.getAttribute("href")),
+                        author: authorEl ? authorEl.textContent.trim() : ""
+                    });
+                }
+            });
+            return books;
+        }
+
+        // ========== 2. 加载目录 ==========
+        let currentSite = null;
+        let currentBook = null;
+
+        async function loadCatalog(site, book) {
+            currentSite = site;
+            currentBook = book;
+
+            document.getElementById("bookTitle").textContent = book.name;
+            document.getElementById("chapterList").innerHTML = '<div class="tip">加载目录中...</div>';
+            showSection("catalog");
+
+            try {
+                const html = await fetchPage(book.url, site.encoding);
+                const parser = new DOMParser();
+                const doc = parser.parseFromString(html, "text/html");
+
+                const chapters = doc.querySelectorAll(site.chapterSelector);
+                const list = document.getElementById("chapterList");
+                list.innerHTML = "";
+
+                chapters.forEach(a => {
+                    const item = document.createElement("div");
+                    item.className = "chapter-item";
+                    item.textContent = a.textContent.trim();
+                    item.title = a.textContent.trim();
+                    item.onclick = () => loadChapter(
+                        toAbsoluteUrl(site.baseUrl, a.getAttribute("href"))
+                    );
+                    list.appendChild(item);
+                });
+
+                if (chapters.length === 0) {
+                    list.innerHTML = '<div class="tip error">未解析到章节，请检查站点配置</div>';
+                }
+            } catch (err) {
+                document.getElementById("chapterList").innerHTML = 
+                    '<div class="tip error">加载失败：' + err.message + '</div>';
+            }
+        }
+
+        // ========== 3. 加载正文 & 去广告 ==========
+        async function loadChapter(url) {
+            document.getElementById("readerContent").innerHTML = "";
+            document.getElementById("readerTip").textContent = "加载中...";
+            showSection("reader");
+
+            try {
+                const html = await fetchPage(url, currentSite.encoding);
+                const parser = new DOMParser();
+                const doc = parser.parseFromString(html, "text/html");
+
+                const title = doc.querySelector("h1")?.textContent?.trim() || "未知章节";
+                document.getElementById("chapterTitle").textContent = title;
+
+                const contentDiv = doc.querySelector(currentSite.contentSelector);
+                if (!contentDiv) {
+                    document.getElementById("readerTip").textContent = "未找到正文内容";
+                    return;
+                }
+
+                // 批量移除广告节点
+                const adSelectors = "script, style, div, a, center, .ad, .adsbygoogle, .bottom-ad, .tips";
+                contentDiv.querySelectorAll(adSelectors).forEach(el => el.remove());
+
+                // 清理空行与广告文字
+                const rawLines = contentDiv.innerText.split("\n")
+                    .map(line => line.trim())
+                    .filter(line => {
+                        return line.length > 0
+                            && !line.includes("笔趣阁")
+                            && !line.includes("爱书包")
+                            && !line.includes("广告")
+                            && !line.includes("本章未完")
+                            && !line.includes("最新章节");
+                    });
+
+                document.getElementById("readerContent").innerHTML = 
+                    rawLines.map(line => `<p>${line}</p>`).join("");
+                document.getElementById("readerTip").textContent = "";
+
+            } catch (err) {
+                document.getElementById("readerTip").textContent = "加载失败：" + err.message;
+                console.error(err);
+            }
+        }
+
+        // ========== 事件绑定 ==========
+        document.getElementById("searchBtn").addEventListener("click", doSearch);
+        document.getElementById("searchInput").addEventListener("keydown", e => {
+            if (e.key === "Enter") doSearch();
+        });
+    </script>
+</body>
+</html>
