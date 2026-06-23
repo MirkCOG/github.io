@@ -39,11 +39,7 @@
             --card-bg: #222226;
         }
 
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+        * { margin:0; padding:0; box-sizing:border-box; }
 
         body {
             font-family: "PingFang SC", "Microsoft YaHei", "Noto Sans SC", system-ui, -apple-system, sans-serif;
@@ -58,617 +54,159 @@
             flex-direction: column;
         }
 
-        ::-webkit-scrollbar {
-            width: 4px;
-            height: 4px;
-        }
-        ::-webkit-scrollbar-track {
-            background: transparent;
-        }
-        ::-webkit-scrollbar-thumb {
-            background: var(--border);
-            border-radius: 10px;
-        }
-        ::-webkit-scrollbar-thumb:hover {
-            background: var(--text-muted);
-        }
+        ::-webkit-scrollbar { width:4px; height:4px; }
+        ::-webkit-scrollbar-track { background:transparent; }
+        ::-webkit-scrollbar-thumb { background:var(--border); border-radius:10px; }
+        ::-webkit-scrollbar-thumb:hover { background:var(--text-muted); }
 
         /* ===== 顶部栏 ===== */
         .header {
-            flex-shrink: 0;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            padding: 12px 16px;
-            background: var(--card-bg);
-            border-bottom: 1px solid var(--border);
-            box-shadow: 0 1px 4px var(--shadow);
-            z-index: 100;
-            transition: background var(--transition), border var(--transition);
-            flex-wrap: wrap;
-            gap: 8px;
+            flex-shrink:0;
+            display:flex;
+            align-items:center;
+            justify-content:space-between;
+            padding:12px 16px;
+            background:var(--card-bg);
+            border-bottom:1px solid var(--border);
+            box-shadow:0 1px 4px var(--shadow);
+            z-index:100;
+            transition:background var(--transition), border var(--transition);
+            flex-wrap:wrap;
+            gap:8px;
         }
-        .header-left {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            min-width: 0;
-        }
-        .header-left .logo {
-            font-size: 20px;
-            font-weight: 700;
-            color: var(--accent);
-            white-space: nowrap;
-            display: flex;
-            align-items: center;
-            gap: 4px;
-        }
-        .header-left .logo span {
-            font-size: 16px;
-            color: var(--text-muted);
-            font-weight: 400;
-        }
-        .header-left .book-title {
-            font-size: 14px;
-            color: var(--text-muted);
-            max-width: 150px;
-            overflow: hidden;
-            text-overflow: ellipsis;
-            white-space: nowrap;
-            margin-left: 4px;
-        }
-        .header-center {
-            display: flex;
-            align-items: center;
-            gap: 6px;
-            font-size: 13px;
-            color: var(--text-muted);
-            flex: 1;
-            justify-content: center;
-            min-width: 80px;
-        }
-        .header-center .chapter-progress {
-            font-weight: 500;
-            color: var(--text);
-            white-space: nowrap;
-        }
-        .header-right {
-            display: flex;
-            align-items: center;
-            gap: 4px;
-            flex-wrap: wrap;
-        }
-        .header-right button {
-            background: none;
-            border: none;
-            cursor: pointer;
-            font-size: 18px;
-            padding: 6px 8px;
-            border-radius: 8px;
-            color: var(--text-muted);
-            transition: background var(--transition), color var(--transition);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            line-height: 1;
-        }
-        .header-right button:hover {
-            background: var(--hover);
-            color: var(--text);
-        }
-        .header-right button.active {
-            color: var(--accent);
-            background: var(--hover);
-        }
-        .header-right .font-size-group {
-            display: flex;
-            align-items: center;
-            gap: 2px;
-            background: var(--bg);
-            border-radius: 8px;
-            padding: 2px;
-        }
-        .header-right .font-size-group button {
-            font-size: 14px;
-            padding: 4px 6px;
-            min-width: 26px;
-            border-radius: 6px;
-        }
-        .header-right .font-size-group button:hover {
-            background: var(--hover);
-        }
-        .header-right .font-size-group .size-label {
-            font-size: 12px;
-            color: var(--text-muted);
-            padding: 0 4px;
-            min-width: 22px;
-            text-align: center;
-        }
-        .btn-copy-link {
-            font-size: 16px !important;
-        }
-        .btn-copy-link.copied {
-            color: var(--accent) !important;
-        }
+        .header-left { display:flex; align-items:center; gap:10px; min-width:0; }
+        .header-left .logo { font-size:20px; font-weight:700; color:var(--accent); white-space:nowrap; display:flex; align-items:center; gap:4px; }
+        .header-left .logo span { font-size:16px; color:var(--text-muted); font-weight:400; }
+        .header-left .book-title { font-size:14px; color:var(--text-muted); max-width:150px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; margin-left:4px; }
+        .header-center { display:flex; align-items:center; gap:6px; font-size:13px; color:var(--text-muted); flex:1; justify-content:center; min-width:80px; }
+        .header-center .chapter-progress { font-weight:500; color:var(--text); white-space:nowrap; }
+        .header-right { display:flex; align-items:center; gap:4px; flex-wrap:wrap; }
+        .header-right button { background:none; border:none; cursor:pointer; font-size:18px; padding:6px 8px; border-radius:8px; color:var(--text-muted); transition:background var(--transition), color var(--transition); display:flex; align-items:center; justify-content:center; line-height:1; }
+        .header-right button:hover { background:var(--hover); color:var(--text); }
+        .header-right button.active { color:var(--accent); background:var(--hover); }
+        .header-right .font-size-group { display:flex; align-items:center; gap:2px; background:var(--bg); border-radius:8px; padding:2px; }
+        .header-right .font-size-group button { font-size:14px; padding:4px 6px; min-width:26px; border-radius:6px; }
+        .header-right .font-size-group button:hover { background:var(--hover); }
+        .header-right .font-size-group .size-label { font-size:12px; color:var(--text-muted); padding:0 4px; min-width:22px; text-align:center; }
+        .btn-copy-link { font-size:16px !important; }
+        .btn-copy-link.copied { color:var(--accent) !important; }
 
-        /* ===== 主体布局 ===== */
-        .main {
-            display: flex;
-            flex: 1;
-            overflow: hidden;
-            position: relative;
-        }
+        /* ===== 主体 ===== */
+        .main { display:flex; flex:1; overflow:hidden; position:relative; }
 
         /* ===== 侧边栏 ===== */
         .sidebar {
-            flex-shrink: 0;
-            width: 280px;
-            background: var(--bg-sidebar);
-            border-right: 1px solid var(--border);
-            overflow-y: auto;
-            padding: 16px 0 30px 0;
-            transition: transform 0.3s ease, width 0.3s ease, background var(--transition), border var(--transition);
-            z-index: 50;
-            display: flex;
-            flex-direction: column;
+            flex-shrink:0;
+            width:280px;
+            background:var(--bg-sidebar);
+            border-right:1px solid var(--border);
+            overflow-y:auto;
+            padding:16px 0 30px 0;
+            transition:transform 0.3s ease, width 0.3s ease, background var(--transition), border var(--transition);
+            z-index:50;
+            display:flex;
+            flex-direction:column;
         }
-        .sidebar-header {
-            padding: 0 16px 14px 16px;
-            font-size: 14px;
-            font-weight: 600;
-            color: var(--text-muted);
-            border-bottom: 1px solid var(--border);
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            flex-shrink: 0;
-        }
-        .sidebar-header .count {
-            font-weight: 400;
-            font-size: 12px;
-        }
-        .sidebar .file-list {
-            list-style: none;
-            padding: 8px 0;
-            flex: 1;
-            overflow-y: auto;
-        }
-        .sidebar .file-list li {
-            padding: 12px 18px;
-            cursor: pointer;
-            font-size: 15px;
-            border-left: 3px solid transparent;
-            transition: background 0.15s, border-color 0.15s, color 0.15s;
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
-            color: var(--text);
-            border-radius: 0 6px 6px 0;
-            margin: 1px 4px 1px 0;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            -webkit-tap-highlight-color: transparent;
-        }
-        .sidebar .file-list li:active {
-            background: var(--hover);
-        }
-        .sidebar .file-list li.active {
-            border-left-color: var(--accent);
-            background: var(--hover);
-            color: var(--accent);
-            font-weight: 600;
-        }
-        .sidebar .file-list li .file-icon {
-            font-size: 18px;
-            flex-shrink: 0;
-        }
-        .sidebar .file-list li .file-name {
-            overflow: hidden;
-            text-overflow: ellipsis;
-        }
+        .sidebar-header { padding:0 16px 14px 16px; font-size:14px; font-weight:600; color:var(--text-muted); border-bottom:1px solid var(--border); display:flex; justify-content:space-between; align-items:center; flex-shrink:0; }
+        .sidebar-header .count { font-weight:400; font-size:12px; }
+        .sidebar .file-list { list-style:none; padding:8px 0; flex:1; overflow-y:auto; }
+        .sidebar .file-list li { padding:12px 18px; cursor:pointer; font-size:15px; border-left:3px solid transparent; transition:background 0.15s, border-color 0.15s, color 0.15s; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; color:var(--text); border-radius:0 6px 6px 0; margin:1px 4px 1px 0; display:flex; align-items:center; gap:10px; -webkit-tap-highlight-color:transparent; }
+        .sidebar .file-list li:active { background:var(--hover); }
+        .sidebar .file-list li.active { border-left-color:var(--accent); background:var(--hover); color:var(--accent); font-weight:600; }
+        .sidebar .file-list li .file-icon { font-size:18px; flex-shrink:0; }
+        .sidebar .file-list li .file-name { overflow:hidden; text-overflow:ellipsis; }
 
         /* ===== 内容区域 ===== */
-        .content {
-            flex: 1;
-            overflow-y: auto;
-            padding: 24px 20px 40px 20px;
-            background: var(--bg);
-            transition: background var(--transition);
-            scroll-behavior: smooth;
-            position: relative;
-            -webkit-overflow-scrolling: touch;
-        }
-        .content-inner {
-            max-width: var(--max-width);
-            margin: 0 auto;
-            padding-bottom: 60px;
-        }
+        .content { flex:1; overflow-y:auto; padding:24px 20px 40px 20px; background:var(--bg); transition:background var(--transition); scroll-behavior:smooth; position:relative; -webkit-overflow-scrolling:touch; }
+        .content-inner { max-width:var(--max-width); margin:0 auto; padding-bottom:60px; }
 
-        /* ===== 内容样式 ===== */
-        .chapter-title {
-            font-size: calc(var(--font-size) * 1.5);
-            font-weight: 700;
-            text-align: center;
-            color: var(--text-title);
-            margin: 0 0 24px 0;
-            padding-top: 8px;
-            letter-spacing: 1px;
-            line-height: 1.5;
-            transition: color var(--transition);
-        }
-        .chapter-body {
-            font-size: var(--font-size);
-            line-height: var(--line-height);
-            color: var(--text);
-            transition: color var(--transition);
-        }
-        .chapter-body p {
-            text-indent: 2em;
-            margin: 0 0 0.6em 0;
-            word-break: break-word;
-        }
-        .chapter-body p:last-child {
-            margin-bottom: 0;
-        }
-        .chapter-body .empty-line {
-            height: 0.6em;
-        }
+        .chapter-title { font-size:calc(var(--font-size) * 1.5); font-weight:700; text-align:center; color:var(--text-title); margin:0 0 24px 0; padding-top:8px; letter-spacing:1px; line-height:1.5; transition:color var(--transition); }
+        .chapter-body { font-size:var(--font-size); line-height:var(--line-height); color:var(--text); transition:color var(--transition); }
+        .chapter-body p { text-indent:2em; margin:0 0 0.6em 0; word-break:break-word; }
+        .chapter-body p:last-child { margin-bottom:0; }
+        .chapter-body .empty-line { height:0.6em; }
 
         /* ===== 底部导航 ===== */
         .footer {
-            flex-shrink: 0;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            padding: 10px 16px;
-            background: var(--card-bg);
-            border-top: 1px solid var(--border);
-            box-shadow: 0 -1px 4px var(--shadow);
-            transition: background var(--transition), border var(--transition);
-            flex-wrap: wrap;
-            gap: 6px;
-            z-index: 100;
+            flex-shrink:0;
+            display:flex;
+            align-items:center;
+            justify-content:space-between;
+            padding:10px 16px;
+            background:var(--card-bg);
+            border-top:1px solid var(--border);
+            box-shadow:0 -1px 4px var(--shadow);
+            transition:background var(--transition), border var(--transition);
+            flex-wrap:wrap;
+            gap:6px;
+            z-index:100;
         }
-        .footer .progress {
-            font-size: 13px;
-            color: var(--text-muted);
-            display: flex;
-            align-items: center;
-            gap: 6px;
-            flex-wrap: wrap;
-        }
-        .footer .progress .bar-wrap {
-            width: 100px;
-            height: 4px;
-            background: var(--border);
-            border-radius: 4px;
-            overflow: hidden;
-        }
-        .footer .progress .bar-wrap .bar {
-            height: 100%;
-            background: var(--accent);
-            border-radius: 4px;
-            transition: width 0.3s;
-            width: 0%;
-        }
-        .footer .nav-buttons {
-            display: flex;
-            gap: 6px;
-        }
-        .footer .nav-buttons button {
-            padding: 8px 16px;
-            border: 1px solid var(--border);
-            background: var(--bg);
-            color: var(--text);
-            border-radius: 8px;
-            cursor: pointer;
-            font-size: 14px;
-            transition: background 0.2s, color 0.2s, border 0.2s;
-            font-family: inherit;
-            -webkit-tap-highlight-color: transparent;
-            min-height: 44px;
-            display: flex;
-            align-items: center;
-            gap: 4px;
-        }
-        .footer .nav-buttons button:active {
-            background: var(--hover);
-        }
-        .footer .nav-buttons button:hover:not(:disabled) {
-            background: var(--hover);
-            border-color: var(--accent-light);
-        }
-        .footer .nav-buttons button:disabled {
-            opacity: 0.35;
-            cursor: not-allowed;
-        }
-        .footer .nav-buttons button .key-hint {
-            font-size: 11px;
-            color: var(--text-muted);
-            margin-left: 2px;
-        }
+        .footer .progress { font-size:13px; color:var(--text-muted); display:flex; align-items:center; gap:6px; flex-wrap:wrap; }
+        .footer .progress .bar-wrap { width:100px; height:4px; background:var(--border); border-radius:4px; overflow:hidden; }
+        .footer .progress .bar-wrap .bar { height:100%; background:var(--accent); border-radius:4px; transition:width 0.3s; width:0%; }
+        .footer .nav-buttons { display:flex; gap:6px; }
+        .footer .nav-buttons button { padding:8px 16px; border:1px solid var(--border); background:var(--bg); color:var(--text); border-radius:8px; cursor:pointer; font-size:14px; transition:background 0.2s, color 0.2s, border 0.2s; font-family:inherit; -webkit-tap-highlight-color:transparent; min-height:44px; display:flex; align-items:center; gap:4px; }
+        .footer .nav-buttons button:active { background:var(--hover); }
+        .footer .nav-buttons button:hover:not(:disabled) { background:var(--hover); border-color:var(--accent-light); }
+        .footer .nav-buttons button:disabled { opacity:0.35; cursor:not-allowed; }
+        .footer .nav-buttons button .key-hint { font-size:11px; color:var(--text-muted); margin-left:2px; }
 
         /* ===== 加载 & 空状态 ===== */
-        .loading-overlay,
-        .empty-state {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            height: 100%;
-            color: var(--text-muted);
-            text-align: center;
-            padding: 40px 20px;
+        .loading-overlay, .empty-state { display:flex; flex-direction:column; align-items:center; justify-content:center; height:100%; color:var(--text-muted); text-align:center; padding:40px 20px; }
+        .loading-overlay .spinner { width:40px; height:40px; border:4px solid var(--border); border-top-color:var(--accent); border-radius:50%; animation:spin 0.9s linear infinite; margin-bottom:20px; }
+        @keyframes spin { to { transform:rotate(360deg); } }
+        .empty-state .icon { font-size:56px; margin-bottom:16px; }
+        .empty-state h2 { font-size:20px; font-weight:600; color:var(--text-title); margin-bottom:8px; }
+        .empty-state p { max-width:420px; font-size:14px; color:var(--text-muted); line-height:1.7; }
+
+        /* ===== 移动端 ===== */
+        .menu-toggle { display:none; background:none; border:none; font-size:24px; cursor:pointer; color:var(--text); padding:6px 10px; border-radius:8px; transition:background 0.2s; -webkit-tap-highlight-color:transparent; }
+        .menu-toggle:active { background:var(--hover); }
+        .sidebar-overlay { display:none; position:fixed; inset:0; background:rgba(0,0,0,0.3); z-index:40; opacity:0; transition:opacity 0.3s; }
+        .sidebar-overlay.show { opacity:1; }
+
+        @media (max-width:768px) {
+            .sidebar { position:fixed; top:0; left:0; bottom:0; width:280px; transform:translateX(-100%); border-right:1px solid var(--border); box-shadow:4px 0 20px rgba(0,0,0,0.15); z-index:60; border-radius:0 12px 12px 0; padding-top:12px; }
+            .sidebar.open { transform:translateX(0); }
+            .sidebar-overlay.show { display:block; }
+            .menu-toggle { display:inline-flex; }
+            .header-left .book-title { max-width:100px; font-size:13px; }
+            .header { padding:10px 12px; flex-wrap:nowrap; }
+            .header-center { font-size:12px; min-width:60px; flex:0 1 auto; }
+            .content { padding:20px 14px 30px 14px; }
+            .footer { padding:8px 12px; flex-wrap:wrap; gap:4px; }
+            .footer .progress .bar-wrap { width:80px; }
+            .footer .nav-buttons button { padding:6px 12px; font-size:13px; min-height:40px; }
+            .chapter-title { font-size:calc(var(--font-size) * 1.3); margin-bottom:18px; }
+            .header-right .font-size-group button { font-size:13px; padding:3px 6px; min-width:24px; }
+            .header-right button { font-size:16px; padding:4px 8px; }
+            .header-left .logo { font-size:18px; }
+            .header-left .logo span { font-size:14px; }
+            .sidebar .file-list li { padding:14px 18px; font-size:15px; }
         }
-        .loading-overlay .spinner {
-            width: 40px;
-            height: 40px;
-            border: 4px solid var(--border);
-            border-top-color: var(--accent);
-            border-radius: 50%;
-            animation: spin 0.9s linear infinite;
-            margin-bottom: 20px;
-        }
-        @keyframes spin {
-            to {
-                transform: rotate(360deg);
-            }
-        }
-        .empty-state .icon {
-            font-size: 56px;
-            margin-bottom: 16px;
-        }
-        .empty-state h2 {
-            font-size: 20px;
-            font-weight: 600;
-            color: var(--text-title);
-            margin-bottom: 8px;
-        }
-        .empty-state p {
-            max-width: 420px;
-            font-size: 14px;
-            color: var(--text-muted);
-            line-height: 1.7;
+        @media (max-width:480px) {
+            .header-left .book-title { max-width:70px; font-size:12px; }
+            .header-center { font-size:11px; min-width:50px; }
+            .content { padding:16px 12px 24px 12px; }
+            .footer .progress { font-size:12px; }
+            .footer .nav-buttons button { font-size:12px; padding:5px 10px; min-height:36px; }
+            .chapter-title { font-size:calc(var(--font-size) * 1.15); margin-bottom:14px; }
+            .sidebar { width:260px; }
         }
 
-        /* ===== 移动端适配 ===== */
-        .menu-toggle {
-            display: none;
-            background: none;
-            border: none;
-            font-size: 24px;
-            cursor: pointer;
-            color: var(--text);
-            padding: 6px 10px;
-            border-radius: 8px;
-            transition: background 0.2s;
-            -webkit-tap-highlight-color: transparent;
-        }
-        .menu-toggle:active {
-            background: var(--hover);
-        }
-        .sidebar-overlay {
-            display: none;
-            position: fixed;
-            inset: 0;
-            background: rgba(0, 0, 0, 0.3);
-            z-index: 40;
-            opacity: 0;
-            transition: opacity 0.3s;
-        }
-        .sidebar-overlay.show {
-            opacity: 1;
-        }
+        .hidden { display:none !important; }
+        .toast { position:fixed; bottom:80px; left:50%; transform:translateX(-50%); background:var(--card-bg); color:var(--text); padding:10px 24px; border-radius:10px; box-shadow:0 4px 20px rgba(0,0,0,0.15); border:1px solid var(--border); font-size:14px; z-index:200; opacity:0; transition:opacity 0.3s, transform 0.3s; pointer-events:none; white-space:nowrap; }
+        .toast.show { opacity:1; transform:translateX(-50%) translateY(0); }
+        @media (max-width:480px) { .toast { bottom:70px; font-size:13px; padding:8px 18px; white-space:normal; max-width:90%; } }
 
-        @media (max-width: 768px) {
-            .sidebar {
-                position: fixed;
-                top: 0;
-                left: 0;
-                bottom: 0;
-                width: 280px;
-                transform: translateX(-100%);
-                border-right: 1px solid var(--border);
-                box-shadow: 4px 0 20px rgba(0, 0, 0, 0.15);
-                z-index: 60;
-                border-radius: 0 12px 12px 0;
-                padding-top: 12px;
-            }
-            .sidebar.open {
-                transform: translateX(0);
-            }
-            .sidebar-overlay.show {
-                display: block;
-            }
-            .menu-toggle {
-                display: inline-flex;
-            }
-            .header-left .book-title {
-                max-width: 100px;
-                font-size: 13px;
-            }
-            .header {
-                padding: 10px 12px;
-                flex-wrap: nowrap;
-            }
-            .header-center {
-                font-size: 12px;
-                min-width: 60px;
-                flex: 0 1 auto;
-            }
-            .content {
-                padding: 20px 14px 30px 14px;
-            }
-            .footer {
-                padding: 8px 12px;
-                flex-wrap: wrap;
-                gap: 4px;
-            }
-            .footer .progress .bar-wrap {
-                width: 80px;
-            }
-            .footer .nav-buttons button {
-                padding: 6px 12px;
-                font-size: 13px;
-                min-height: 40px;
-            }
-            .chapter-title {
-                font-size: calc(var(--font-size) * 1.3);
-                margin-bottom: 18px;
-            }
-            .header-right .font-size-group button {
-                font-size: 13px;
-                padding: 3px 6px;
-                min-width: 24px;
-            }
-            .header-right button {
-                font-size: 16px;
-                padding: 4px 8px;
-            }
-            .header-left .logo {
-                font-size: 18px;
-            }
-            .header-left .logo span {
-                font-size: 14px;
-            }
-            .sidebar .file-list li {
-                padding: 14px 18px;
-                font-size: 15px;
-            }
-        }
-
-        @media (max-width: 480px) {
-            .header-left .book-title {
-                max-width: 70px;
-                font-size: 12px;
-            }
-            .header-center {
-                font-size: 11px;
-                min-width: 50px;
-            }
-            .content {
-                padding: 16px 12px 24px 12px;
-            }
-            .footer .progress {
-                font-size: 12px;
-            }
-            .footer .nav-buttons button {
-                font-size: 12px;
-                padding: 5px 10px;
-                min-height: 36px;
-            }
-            .chapter-title {
-                font-size: calc(var(--font-size) * 1.15);
-                margin-bottom: 14px;
-            }
-            .sidebar {
-                width: 260px;
-            }
-        }
-
-        .hidden {
-            display: none !important;
-        }
-        .fade-in {
-            animation: fadeIn 0.4s ease;
-        }
-        @keyframes fadeIn {
-            from {
-                opacity: 0;
-                transform: translateY(12px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        /* ===== Toast 提示 ===== */
-        .toast {
-            position: fixed;
-            bottom: 80px;
-            left: 50%;
-            transform: translateX(-50%);
-            background: var(--card-bg);
-            color: var(--text);
-            padding: 10px 24px;
-            border-radius: 10px;
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
-            border: 1px solid var(--border);
-            font-size: 14px;
-            z-index: 200;
-            opacity: 0;
-            transition: opacity 0.3s, transform 0.3s;
-            pointer-events: none;
-            white-space: nowrap;
-        }
-        .toast.show {
-            opacity: 1;
-            transform: translateX(-50%) translateY(0);
-        }
-        @media (max-width: 480px) {
-            .toast {
-                bottom: 70px;
-                font-size: 13px;
-                padding: 8px 18px;
-                white-space: normal;
-                max-width: 90%;
-            }
-        }
-
-        /* ===== 文件协议警告遮罩 ===== */
-        .file-protocol-warning {
-            display: none;
-            position: fixed;
-            inset: 0;
-            background: rgba(0,0,0,0.7);
-            z-index: 999;
-            justify-content: center;
-            align-items: center;
-            color: #fff;
-            font-size: 18px;
-            padding: 20px;
-            text-align: center;
-        }
-        .file-protocol-warning .card {
-            background: var(--card-bg);
-            color: var(--text);
-            max-width: 500px;
-            padding: 30px 24px;
-            border-radius: 16px;
-            box-shadow: 0 8px 40px rgba(0,0,0,0.4);
-        }
-        .file-protocol-warning .card h2 {
-            margin-bottom: 12px;
-        }
-        .file-protocol-warning .card p {
-            font-size: 15px;
-            line-height: 1.8;
-            margin-bottom: 16px;
-        }
-        .file-protocol-warning .card code {
-            background: var(--bg);
-            padding: 4px 10px;
-            border-radius: 6px;
-            font-size: 14px;
-        }
-        .file-protocol-warning .card .btn-close-warning {
-            padding: 8px 24px;
-            background: var(--accent);
-            color: #fff;
-            border: none;
-            border-radius: 8px;
-            cursor: pointer;
-            font-size: 15px;
-            margin-top: 8px;
-        }
-        .file-protocol-warning .card .btn-close-warning:hover {
-            background: var(--accent-light);
-        }
-        .file-protocol-warning.show {
-            display: flex;
-        }
+        .file-protocol-warning { display:none; position:fixed; inset:0; background:rgba(0,0,0,0.7); z-index:999; justify-content:center; align-items:center; color:#fff; font-size:18px; padding:20px; text-align:center; }
+        .file-protocol-warning .card { background:var(--card-bg); color:var(--text); max-width:500px; padding:30px 24px; border-radius:16px; box-shadow:0 8px 40px rgba(0,0,0,0.4); }
+        .file-protocol-warning .card h2 { margin-bottom:12px; }
+        .file-protocol-warning .card p { font-size:15px; line-height:1.8; margin-bottom:16px; }
+        .file-protocol-warning .card code { background:var(--bg); padding:4px 10px; border-radius:6px; font-size:14px; }
+        .file-protocol-warning .card .btn-close-warning { padding:8px 24px; background:var(--accent); color:#fff; border:none; border-radius:8px; cursor:pointer; font-size:15px; margin-top:8px; }
+        .file-protocol-warning .card .btn-close-warning:hover { background:var(--accent-light); }
+        .file-protocol-warning.show { display:flex; }
     </style>
 </head>
 <body>
@@ -677,10 +215,7 @@
     <div class="file-protocol-warning" id="fileProtocolWarning">
         <div class="card">
             <h2>⚠️ 请使用 HTTP 服务器打开</h2>
-            <p>
-                检测到您直接双击了 HTML 文件（<code>file://</code> 协议），这可能导致跨域请求被浏览器阻止，无法加载小说列表。<br><br>
-                请使用以下方式之一打开本页面：
-            </p>
+            <p>检测到您直接双击了 HTML 文件（<code>file://</code> 协议），这可能导致跨域请求被浏览器阻止，无法加载小说列表。<br><br>请使用以下方式之一打开本页面：</p>
             <p style="text-align:left; font-size:14px;">
                 ✅ <strong>VS Code</strong>：安装 Live Server 插件，右键选择 "Open with Live Server"<br>
                 ✅ <strong>Python</strong>：在文件夹下运行 <code>python -m http.server 8000</code>，访问 <code>http://localhost:8000</code><br>
@@ -713,10 +248,7 @@
 
     <!-- ===== 主体 ===== -->
     <div class="main">
-        <!-- 侧边栏遮罩（移动端） -->
         <div class="sidebar-overlay" id="sidebarOverlay"></div>
-
-        <!-- 侧边栏：书架 -->
         <nav class="sidebar" id="sidebar">
             <div class="sidebar-header">
                 <span>📖 小说列表</span>
@@ -724,8 +256,6 @@
             </div>
             <ul class="file-list" id="fileList"></ul>
         </nav>
-
-        <!-- 内容区 -->
         <main class="content" id="contentArea">
             <div class="content-inner" id="contentInner">
                 <div class="empty-state" id="emptyState">
@@ -766,7 +296,6 @@
             const isFileProtocol = window.location.protocol === 'file:';
             const warningEl = document.getElementById('fileProtocolWarning');
             const closeWarningBtn = document.getElementById('closeWarningBtn');
-
             if (isFileProtocol) {
                 warningEl.classList.add('show');
                 closeWarningBtn.addEventListener('click', function() {
@@ -812,29 +341,11 @@
 
             // ---------- 安全的 localStorage ----------
             function safeLocalStorage() {
-                try {
-                    const test = 'test';
-                    localStorage.setItem(test, test);
-                    localStorage.removeItem(test);
-                    return localStorage;
-                } catch (e) {
-                    return null;
-                }
+                try { localStorage.setItem('test','test'); localStorage.removeItem('test'); return localStorage; } catch(e) { return null; }
             }
             const storage = safeLocalStorage();
-
-            function safeSetItem(key, value) {
-                if (storage) {
-                    try { storage.setItem(key, value); } catch (e) {}
-                }
-            }
-
-            function safeGetItem(key) {
-                if (storage) {
-                    try { return storage.getItem(key); } catch (e) {}
-                }
-                return null;
-            }
+            function safeSetItem(k,v) { if(storage) try { storage.setItem(k,v); } catch(e){} }
+            function safeGetItem(k) { if(storage) try { return storage.getItem(k); } catch(e){} return null; }
 
             // ---------- 工具函数 ----------
             function showToast(msg, duration) {
@@ -842,99 +353,51 @@
                 toast.textContent = msg;
                 toast.classList.add('show');
                 clearTimeout(toast._timer);
-                toast._timer = setTimeout(() => {
-                    toast.classList.remove('show');
-                }, duration);
+                toast._timer = setTimeout(() => { toast.classList.remove('show'); }, duration);
             }
-
-            function showError(msg) {
-                showToast('❌ ' + msg, 3000);
-            }
-
-            function escapeHtml(str) {
-                const div = document.createElement('div');
-                div.textContent = str;
-                return div.innerHTML;
-            }
+            function showError(msg) { showToast('❌ ' + msg, 3000); }
+            function escapeHtml(str) { const d=document.createElement('div'); d.textContent=str; return d.innerHTML; }
 
             // ===== Gitee 仓库解析 =====
             function parseRepoUrl(url) {
                 url = url.trim();
                 const match = url.match(/^https?:\/\/gitee\.com\/([^\/]+\/[^\/]+)\/?$/);
-                if (match) {
-                    return match[1];
-                }
-                return null;
+                return match ? match[1] : null;
             }
 
             // ===== Gitee API 获取文件列表 =====
             async function fetchRepoFiles(repo) {
                 const apiUrl = `https://gitee.com/api/v5/repos/${repo}/contents/`;
-                const response = await fetch(apiUrl, {
-                    headers: {
-                        'Accept': 'application/json',
-                    }
-                });
-
+                const response = await fetch(apiUrl, { headers: { 'Accept':'application/json' } });
                 if (!response.ok) {
-                    if (response.status === 404) {
-                        throw new Error('仓库不存在或没有公开访问权限');
-                    } else if (response.status === 403) {
-                        throw new Error('API 请求频率限制，请稍后再试');
-                    } else {
-                        throw new Error(`HTTP ${response.status}: ${response.statusText}`);
-                    }
+                    if (response.status === 404) throw new Error('仓库不存在或没有公开访问权限');
+                    if (response.status === 403) throw new Error('API 请求频率限制，请稍后再试');
+                    throw new Error(`HTTP ${response.status}: ${response.statusText}`);
                 }
-
                 const data = await response.json();
-                if (!Array.isArray(data)) {
-                    throw new Error('无法解析文件列表');
-                }
-
-                const txtFiles = data.filter(item =>
-                    item.type === 'file' &&
-                    item.name.toLowerCase().endsWith('.txt')
-                );
-
-                return txtFiles.map(item => ({
-                    name: item.name,
-                    path: item.path,
-                    size: item.size
-                }));
+                if (!Array.isArray(data)) throw new Error('无法解析文件列表');
+                return data.filter(item => item.type === 'file' && item.name.toLowerCase().endsWith('.txt'))
+                           .map(item => ({ name: item.name, path: item.path, size: item.size }));
             }
 
             // ===== 通过 Gitee API 获取文件内容 =====
             async function fetchFileContent(repo, path) {
                 const apiUrl = `https://gitee.com/api/v5/repos/${repo}/contents/${encodeURIComponent(path)}`;
-                const response = await fetch(apiUrl, {
-                    headers: { 'Accept': 'application/json' }
-                });
-                if (!response.ok) {
-                    throw new Error(`HTTP ${response.status}: ${response.statusText}`);
-                }
+                const response = await fetch(apiUrl, { headers: { 'Accept':'application/json' } });
+                if (!response.ok) throw new Error(`HTTP ${response.status}: ${response.statusText}`);
                 const data = await response.json();
-                if (!data.content) {
-                    throw new Error('文件内容为空');
-                }
-                const base64 = data.content;
-                const raw = atob(base64.replace(/\s/g, ''));
-                try {
-                    return decodeURIComponent(escape(raw));
-                } catch (e) {
-                    const bytes = Uint8Array.from(raw, c => c.charCodeAt(0));
-                    return new TextDecoder('utf-8').decode(bytes);
-                }
+                if (!data.content) throw new Error('文件内容为空');
+                const raw = atob(data.content.replace(/\s/g, ''));
+                try { return decodeURIComponent(escape(raw)); }
+                catch(e) { const bytes = Uint8Array.from(raw, c => c.charCodeAt(0)); return new TextDecoder('utf-8').decode(bytes); }
             }
 
             // ===== 小说解析 =====
             function parseNovel(text) {
                 const lines = text.split(/\r?\n/);
                 const result = [];
-                let currentTitle = '全文';
-                let currentContent = [];
-                let foundChapter = false;
-
-                const CHAPTER_PATTERNS = [
+                let currentTitle = '全文', currentContent = [], foundChapter = false;
+                const PATTERNS = [
                     /^(第[零一二三四五六七八九十百千万0-9]+章)\s*(.*)/,
                     /^(第[零一二三四五六七八九十百千万0-9]+节)\s*(.*)/,
                     /^(第[零一二三四五六七八九十百千万0-9]+回)\s*(.*)/,
@@ -943,31 +406,20 @@
                     /^(第[零一二三四五六七八九十百千万0-9]+部分)\s*(.*)/,
                     /^(序章|楔子|尾声|后记|番外|终章|引子|前言|后序)\s*(.*)/,
                 ];
-
-                for (let i = 0; i < lines.length; i++) {
-                    const line = lines[i].trim();
-                    if (!line) continue;
+                for (const line of lines) {
+                    const l = line.trim();
+                    if (!l) continue;
                     let matched = false;
-                    for (const pattern of CHAPTER_PATTERNS) {
-                        const m = line.match(pattern);
+                    for (const p of PATTERNS) {
+                        const m = l.match(p);
                         if (m) {
                             matched = true;
                             let title = m[1];
-                            if (m[2] && m[2].trim()) {
-                                title = title + ' ' + m[2].trim();
-                            }
+                            if (m[2] && m[2].trim()) title += ' ' + m[2].trim();
                             if (currentContent.length > 0 || foundChapter) {
-                                result.push({
-                                    title: currentTitle || '未命名章节',
-                                    content: currentContent.join('\n')
-                                });
+                                result.push({ title: currentTitle || '未命名章节', content: currentContent.join('\n') });
                             } else {
-                                if (currentContent.length > 0) {
-                                    result.push({
-                                        title: currentTitle || '前言',
-                                        content: currentContent.join('\n')
-                                    });
-                                }
+                                if (currentContent.length > 0) result.push({ title: currentTitle || '前言', content: currentContent.join('\n') });
                             }
                             currentTitle = title;
                             currentContent = [];
@@ -975,34 +427,22 @@
                             break;
                         }
                     }
-                    if (!matched) {
-                        currentContent.push(line);
-                    }
+                    if (!matched) currentContent.push(line);
                 }
-
                 if (currentContent.length > 0 || foundChapter) {
-                    result.push({
-                        title: currentTitle || '未命名章节',
-                        content: currentContent.join('\n')
-                    });
+                    result.push({ title: currentTitle || '未命名章节', content: currentContent.join('\n') });
                 }
-
                 if (result.length === 0) {
                     const content = lines.join('\n').trim();
-                    if (content) {
-                        result.push({ title: '全文', content: content });
-                    } else {
-                        result.push({ title: '空内容', content: '' });
-                    }
+                    if (content) result.push({ title: '全文', content });
+                    else result.push({ title: '空内容', content: '' });
                 }
-
                 for (const ch of result) {
                     let lines2 = ch.content.split(/\r?\n/);
                     while (lines2.length > 0 && lines2[0].trim() === '') lines2.shift();
-                    while (lines2.length > 0 && lines2[lines2.length - 1].trim() === '') lines2.pop();
+                    while (lines2.length > 0 && lines2[lines2.length-1].trim() === '') lines2.pop();
                     ch.content = lines2.join('\n');
                 }
-
                 return result.filter(ch => ch.content.trim().length > 0 || ch.title);
             }
 
@@ -1011,35 +451,25 @@
                 if (!chapters.length || index < 0 || index >= chapters.length) return '';
                 const ch = chapters[index];
                 const lines = ch.content.split(/\r?\n/);
-                let html = `<div class="chapter-title">${escapeHtml(ch.title)}</div>`;
-                html += `<div class="chapter-body">`;
-                let inParagraph = false;
+                let html = `<div class="chapter-title">${escapeHtml(ch.title)}</div><div class="chapter-body">`;
+                let inP = false;
                 for (const line of lines) {
-                    const trimmed = line.trim();
-                    if (trimmed === '') {
-                        if (inParagraph) {
-                            html += `</p>`;
-                            inParagraph = false;
-                        }
-                        html += `<div class="empty-line"></div>`;
+                    const t = line.trim();
+                    if (t === '') {
+                        if (inP) { html += '</p>'; inP = false; }
+                        html += '<div class="empty-line"></div>';
                     } else {
-                        if (!inParagraph) {
-                            html += `<p>`;
-                            inParagraph = true;
-                        } else {
-                            html += `</p><p>`;
-                        }
-                        html += escapeHtml(trimmed);
+                        if (!inP) { html += '<p>'; inP = true; }
+                        else { html += '</p><p>'; }
+                        html += escapeHtml(t);
                     }
                 }
-                if (inParagraph) {
-                    html += `</p>`;
-                }
-                html += `</div>`;
+                if (inP) html += '</p>';
+                html += '</div>';
                 return html;
             }
 
-            // ===== 重置阅读内容 =====
+            // ===== 重置阅读内容（重新渲染指定章节） =====
             function resetReaderContent(startIndex) {
                 if (!chapters.length) return;
                 const html = renderChapterHtml(startIndex);
@@ -1059,7 +489,7 @@
                 loadingState.classList.add('hidden');
             }
 
-            // ===== 追加下一章 =====
+            // ===== 追加下一章（无缝） =====
             function appendNextChapter() {
                 if (loadedChapterCount >= chapters.length) {
                     showToast('已经是最后一章了', 1500);
@@ -1077,133 +507,44 @@
                 return true;
             }
 
-            // ===== 跳转章节（手动） =====
-            function goToChapter(index, keepScroll = false) {
+            // ===== 【修复】手动跳转章节 =====
+            function goToChapter(index) {
                 if (isLoading) return;
                 if (index < 0) index = 0;
                 if (index >= chapters.length) index = chapters.length - 1;
-
+                // 如果已经是当前章节且全部加载，则仅滚动到顶部
                 if (index === currentChapterIndex && loadedChapterCount === chapters.length) {
                     contentArea.scrollTop = 0;
                     return;
                 }
-
-                if (index < loadedChapterCount) {
-                    resetReaderContent(index);
-                } else {
-                    resetReaderContent(index);
-                }
-                contentArea.scrollTop = 0;
+                // 重置到目标章节（重新渲染）
+                resetReaderContent(index);
             }
 
             function goToNext() {
                 if (currentChapterIndex < chapters.length - 1) {
-                    const nextIdx = currentChapterIndex + 1;
-                    if (nextIdx >= loadedChapterCount) {
-                        resetReaderContent(nextIdx);
-                    } else {
-                        goToChapter(nextIdx, false);
-                    }
+                    goToChapter(currentChapterIndex + 1);
                 }
             }
 
             function goToPrev() {
                 if (currentChapterIndex > 0) {
-                    goToChapter(currentChapterIndex - 1, false);
+                    goToChapter(currentChapterIndex - 1);
                 }
             }
 
+            // 自动翻页（保持滚动）
             function autoNextChapter() {
                 if (loadedChapterCount < chapters.length) {
                     const success = appendNextChapter();
-                    if (success) {
-                        showToast(`已加载下一章：${chapters[currentChapterIndex].title}`, 1200);
-                    }
+                    if (success) showToast(`已加载下一章：${chapters[currentChapterIndex].title}`, 1200);
                 }
             }
 
-            // ===== 更新章节进度显示 =====
+            // ===== 更新界面 =====
             function updateChapterProgress(index) {
                 const total = chapters.length;
-                if (total === 0) {
-                    chapterProgress.textContent = '— / —';
-                } else {
-                    chapterProgress.textContent = `${index + 1} / ${total}`;
-                }
-            }
-
-            // ===== 复制章节链接 =====
-            function copyChapterLink() {
-                if (currentFileIndex === -1 || chapters.length === 0) {
-                    showToast('请先打开一本小说', 1500);
-                    return;
-                }
-                const url = new URL(window.location.href);
-                url.search = `?chapter=${currentChapterIndex}`;
-                const link = url.toString();
-                if (navigator.clipboard && navigator.clipboard.writeText) {
-                    navigator.clipboard.writeText(link).then(() => {
-                        showToast('✅ 链接已复制！', 2000);
-                        copyLinkBtn.classList.add('copied');
-                        setTimeout(() => copyLinkBtn.classList.remove('copied'), 2000);
-                    }).catch(() => {
-                        fallbackCopy(link);
-                    });
-                } else {
-                    fallbackCopy(link);
-                }
-            }
-
-            function fallbackCopy(text) {
-                const textarea = document.createElement('textarea');
-                textarea.value = text;
-                document.body.appendChild(textarea);
-                textarea.select();
-                try {
-                    document.execCommand('copy');
-                    showToast('✅ 链接已复制！', 2000);
-                    copyLinkBtn.classList.add('copied');
-                    setTimeout(() => copyLinkBtn.classList.remove('copied'), 2000);
-                } catch (e) {
-                    showToast('❌ 复制失败，请手动复制', 2000);
-                }
-                document.body.removeChild(textarea);
-            }
-
-            // ===== 文件列表渲染 =====
-            function renderFileList() {
-                fileList.innerHTML = '';
-                if (!files.length) {
-                    fileList.innerHTML = '<li style="color:var(--text-muted);padding:12px 18px;font-size:13px;">未找到 .txt 小说</li>';
-                    fileCount.textContent = '0 本';
-                    return;
-                }
-
-                files.forEach((f, i) => {
-                    const li = document.createElement('li');
-                    li.dataset.index = i;
-                    li.innerHTML = `
-                        <span class="file-icon">📄</span>
-                        <span class="file-name">${escapeHtml(f.name)}</span>
-                    `;
-                    if (i === currentFileIndex) {
-                        li.classList.add('active');
-                    }
-                    li.addEventListener('click', () => {
-                        loadAndReadFile(i);
-                        closeSidebar();
-                    });
-                    fileList.appendChild(li);
-                });
-                fileCount.textContent = `${files.length} 本`;
-            }
-
-            function updateSidebarHighlight() {
-                const items = fileList.querySelectorAll('li');
-                items.forEach(li => li.classList.remove('active'));
-                if (currentFileIndex >= 0 && currentFileIndex < items.length) {
-                    items[currentFileIndex].classList.add('active');
-                }
+                chapterProgress.textContent = total === 0 ? '— / —' : `${index+1} / ${total}`;
             }
 
             function updateFooter(index) {
@@ -1221,17 +562,47 @@
                 nextBtn.disabled = index === total - 1;
             }
 
-            // ===== 加载并阅读文件（使用 Gitee API） =====
+            // ===== 文件列表渲染 =====
+            function renderFileList() {
+                fileList.innerHTML = '';
+                if (!files.length) {
+                    fileList.innerHTML = '<li style="color:var(--text-muted);padding:12px 18px;font-size:13px;">未找到 .txt 小说</li>';
+                    fileCount.textContent = '0 本';
+                    return;
+                }
+                files.forEach((f, i) => {
+                    const li = document.createElement('li');
+                    li.dataset.index = i;
+                    li.innerHTML = `<span class="file-icon">📄</span><span class="file-name">${escapeHtml(f.name)}</span>`;
+                    if (i === currentFileIndex) li.classList.add('active');
+                    li.addEventListener('click', () => {
+                        loadAndReadFile(i);
+                        closeSidebar();
+                    });
+                    fileList.appendChild(li);
+                });
+                fileCount.textContent = `${files.length} 本`;
+            }
+
+            function updateSidebarHighlight() {
+                const items = fileList.querySelectorAll('li');
+                items.forEach(li => li.classList.remove('active'));
+                if (currentFileIndex >= 0 && currentFileIndex < items.length) {
+                    items[currentFileIndex].classList.add('active');
+                }
+            }
+
+            // ===== 加载并阅读文件 =====
             async function loadAndReadFile(index, targetChapter) {
                 if (isLoading) return;
                 if (index < 0 || index >= files.length) return;
-
                 const file = files[index];
                 if (currentFileIndex === index && chapters.length > 0) {
+                    // 已打开同一本，跳转到指定章节（或第一章）
                     if (targetChapter !== undefined && targetChapter < chapters.length) {
-                        resetReaderContent(targetChapter);
+                        goToChapter(targetChapter);
                     } else {
-                        resetReaderContent(0);
+                        goToChapter(0);
                     }
                     return;
                 }
@@ -1243,27 +614,20 @@
 
                 try {
                     const content = await fetchFileContent(currentRepo, file.path);
-                    if (!content || content.trim().length === 0) {
-                        throw new Error('文件内容为空');
-                    }
-
+                    if (!content || content.trim().length === 0) throw new Error('文件内容为空');
                     const parsed = parseNovel(content);
-                    if (!parsed.length) {
-                        throw new Error('未能识别到任何章节');
-                    }
+                    if (!parsed.length) throw new Error('未能识别到任何章节');
 
                     chapters = parsed;
                     currentFileIndex = index;
                     loadedChapterCount = 0;
                     currentChapterIndex = 0;
-
                     renderFileList();
                     const startChapter = (targetChapter !== undefined && targetChapter < chapters.length) ? targetChapter : 0;
                     resetReaderContent(startChapter);
                     bookTitle.textContent = file.name.replace(/\.txt$/i, '');
                     saveRepoState();
                     showToast(`✅ 加载成功，共 ${chapters.length} 章`);
-
                 } catch (err) {
                     console.error(err);
                     showError(`加载失败：${err.message || '未知错误'}`);
@@ -1281,10 +645,7 @@
 
             async function loadFixedRepo(targetChapter) {
                 const repo = parseRepoUrl(FIXED_REPO_URL);
-                if (!repo) {
-                    showError('固定仓库地址无效');
-                    return;
-                }
+                if (!repo) { showError('固定仓库地址无效'); return; }
 
                 isLoading = true;
                 emptyState.classList.remove('hidden');
@@ -1294,9 +655,7 @@
 
                 try {
                     const fileListData = await fetchRepoFiles(repo);
-                    if (!fileListData.length) {
-                        throw new Error('仓库根目录下没有找到 .txt 文件');
-                    }
+                    if (!fileListData.length) throw new Error('仓库根目录下没有找到 .txt 文件');
 
                     files = fileListData;
                     currentRepo = repo;
@@ -1304,14 +663,12 @@
                     chapters = [];
                     loadedChapterCount = 0;
                     currentChapterIndex = 0;
-
                     renderFileList();
 
                     emptyState.classList.remove('hidden');
                     loadingState.classList.add('hidden');
                     emptyState.querySelector('h2').textContent = `找到 ${files.length} 本小说`;
                     emptyState.querySelector('p').textContent = '点击左侧列表中的小说开始阅读';
-
                     bookTitle.textContent = '请选择小说';
                     progressLabel.textContent = '未阅读';
                     progressBar.style.width = '0%';
@@ -1331,17 +688,12 @@
                         }
                     }
 
-                    if (files.length > 0 && restoreChapter === null) {
-                        await loadAndReadFile(0, 0);
-                    } else if (files.length > 0 && restoreChapter !== null) {
-                        await loadAndReadFile(0, restoreChapter);
+                    if (files.length > 0) {
+                        await loadAndReadFile(0, restoreChapter || 0);
                     }
 
                     saveRepoState();
-                    if (files.length > 0) {
-                        showToast(`📚 找到 ${files.length} 本小说`);
-                    }
-
+                    if (files.length > 0) showToast(`📚 找到 ${files.length} 本小说`);
                 } catch (err) {
                     console.error(err);
                     showError(`加载失败：${err.message || '未知错误'}`);
@@ -1358,40 +710,30 @@
 
             // ===== 保存 / 恢复 =====
             function saveProgress(index) {
+                if (!storage) return;
                 try {
-                    if (!storage) return;
-                    const data = {
+                    storage.setItem('novel_reader_progress', JSON.stringify({
                         repo: currentRepo,
                         fileIndex: currentFileIndex,
                         chapter: index,
                         loaded: loadedChapterCount,
                         total: chapters.length,
                         timestamp: Date.now()
-                    };
-                    storage.setItem('novel_reader_progress', JSON.stringify(data));
-                } catch (e) { /* ignore */ }
+                    }));
+                } catch(e) {}
             }
-
             function saveRepoState() {
-                try {
-                    if (!storage) return;
-                    storage.setItem('novel_reader_repo', currentRepo);
-                } catch (e) { /* ignore */ }
+                if (!storage) return;
+                try { storage.setItem('novel_reader_repo', currentRepo); } catch(e) {}
             }
-
             function restoreState() {
+                if (!storage) return { repo: '', progress: null };
                 try {
-                    if (!storage) return { repo: '', progress: null };
                     const repo = storage.getItem('novel_reader_repo') || '';
                     const progressRaw = storage.getItem('novel_reader_progress');
-                    if (progressRaw) {
-                        const progress = JSON.parse(progressRaw);
-                        return { repo, progress };
-                    }
+                    if (progressRaw) return { repo, progress: JSON.parse(progressRaw) };
                     return { repo, progress: null };
-                } catch (e) {
-                    return { repo: '', progress: null };
-                }
+                } catch(e) { return { repo: '', progress: null }; }
             }
 
             // ===== 主题 & 字体 =====
@@ -1401,37 +743,22 @@
                 themeToggle.textContent = theme === 'light' ? '🌙' : '☀️';
                 safeSetItem('novel_reader_theme', theme);
             }
-
             function restoreTheme() {
-                try {
-                    const saved = safeGetItem('novel_reader_theme');
-                    if (saved === 'dark' || saved === 'light') {
-                        theme = saved;
-                    } else if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
-                        theme = 'dark';
-                    }
-                } catch (e) { /* ignore */ }
+                const saved = safeGetItem('novel_reader_theme');
+                if (saved === 'dark' || saved === 'light') theme = saved;
+                else if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) theme = 'dark';
                 document.documentElement.setAttribute('data-theme', theme);
                 themeToggle.textContent = theme === 'light' ? '🌙' : '☀️';
             }
-
             function setFontSize(size) {
                 fontSize = Math.min(28, Math.max(12, size));
                 document.documentElement.style.setProperty('--font-size', fontSize + 'px');
                 fontSizeLabel.textContent = fontSize;
                 safeSetItem('novel_reader_fontsize', String(fontSize));
             }
-
             function restoreFontSize() {
-                try {
-                    const saved = safeGetItem('novel_reader_fontsize');
-                    if (saved) {
-                        const size = parseInt(saved, 10);
-                        if (!isNaN(size) && size >= 12 && size <= 28) {
-                            fontSize = size;
-                        }
-                    }
-                } catch (e) { /* ignore */ }
+                const saved = safeGetItem('novel_reader_fontsize');
+                if (saved) { const s = parseInt(saved,10); if (!isNaN(s) && s>=12 && s<=28) fontSize = s; }
                 document.documentElement.style.setProperty('--font-size', fontSize + 'px');
                 fontSizeLabel.textContent = fontSize;
             }
@@ -1443,7 +770,6 @@
                 sidebarOverlay.classList.toggle('show', isSidebarOpen);
                 document.body.style.overflow = isSidebarOpen ? 'hidden' : '';
             }
-
             function closeSidebar() {
                 if (isSidebarOpen) {
                     isSidebarOpen = false;
@@ -1451,6 +777,41 @@
                     sidebarOverlay.classList.remove('show');
                     document.body.style.overflow = '';
                 }
+            }
+
+            // ===== 复制链接 =====
+            function copyChapterLink() {
+                if (currentFileIndex === -1 || chapters.length === 0) {
+                    showToast('请先打开一本小说', 1500);
+                    return;
+                }
+                const url = new URL(window.location.href);
+                url.search = `?chapter=${currentChapterIndex}`;
+                const link = url.toString();
+                if (navigator.clipboard && navigator.clipboard.writeText) {
+                    navigator.clipboard.writeText(link).then(() => {
+                        showToast('✅ 链接已复制！', 2000);
+                        copyLinkBtn.classList.add('copied');
+                        setTimeout(() => copyLinkBtn.classList.remove('copied'), 2000);
+                    }).catch(() => fallbackCopy(link));
+                } else {
+                    fallbackCopy(link);
+                }
+            }
+            function fallbackCopy(text) {
+                const ta = document.createElement('textarea');
+                ta.value = text;
+                document.body.appendChild(ta);
+                ta.select();
+                try {
+                    document.execCommand('copy');
+                    showToast('✅ 链接已复制！', 2000);
+                    copyLinkBtn.classList.add('copied');
+                    setTimeout(() => copyLinkBtn.classList.remove('copied'), 2000);
+                } catch(e) {
+                    showToast('❌ 复制失败，请手动复制', 2000);
+                }
+                document.body.removeChild(ta);
             }
 
             // ===== 初始化 =====
@@ -1467,61 +828,39 @@
 
                 document.addEventListener('keydown', (e) => {
                     if (document.activeElement && document.activeElement.tagName === 'INPUT') return;
-                    if (e.key === 'ArrowLeft' || e.key === 'PageUp') {
-                        e.preventDefault();
-                        goToPrev();
-                    } else if (e.key === 'ArrowRight' || e.key === 'PageDown') {
-                        e.preventDefault();
-                        goToNext();
-                    } else if (e.key === 'Escape') {
-                        closeSidebar();
-                    }
+                    if (e.key === 'ArrowLeft' || e.key === 'PageUp') { e.preventDefault(); goToPrev(); }
+                    else if (e.key === 'ArrowRight' || e.key === 'PageDown') { e.preventDefault(); goToNext(); }
+                    else if (e.key === 'Escape') closeSidebar();
                 });
 
                 menuToggle.addEventListener('click', toggleSidebar);
                 sidebarOverlay.addEventListener('click', closeSidebar);
+                contentArea.addEventListener('click', () => { if (window.innerWidth <= 768 && isSidebarOpen) closeSidebar(); });
+                window.addEventListener('resize', () => { if (window.innerWidth > 768 && isSidebarOpen) closeSidebar(); });
 
-                contentArea.addEventListener('click', () => {
-                    if (window.innerWidth <= 768 && isSidebarOpen) closeSidebar();
-                });
-
-                window.addEventListener('resize', () => {
-                    if (window.innerWidth > 768 && isSidebarOpen) closeSidebar();
-                });
-
-                // 滚动到底部自动追加下一章
+                // 滚动到底部自动追加下一章（无缝）
                 contentArea.addEventListener('scroll', function() {
-                    if (isLoading || chapters.length === 0) return;
-                    if (loadedChapterCount >= chapters.length) return;
-
+                    if (isLoading || chapters.length === 0 || loadedChapterCount >= chapters.length) return;
                     const threshold = 80;
-                    const scrollTop = contentArea.scrollTop;
-                    const scrollHeight = contentArea.scrollHeight;
-                    const clientHeight = contentArea.clientHeight;
+                    const { scrollTop, scrollHeight, clientHeight } = contentArea;
                     if (scrollTop + clientHeight >= scrollHeight - threshold) {
                         if (!isAutoScrolling) {
                             isAutoScrolling = true;
                             autoNextChapter();
-                            setTimeout(() => {
-                                isAutoScrolling = false;
-                            }, 500);
+                            setTimeout(() => { isAutoScrolling = false; }, 500);
                         }
                     }
                 });
 
-                // 解析 URL 参数中的 chapter
                 const urlParams = new URLSearchParams(window.location.search);
                 const chapterParam = urlParams.get('chapter');
                 let targetChapter = null;
                 if (chapterParam !== null) {
                     const parsed = parseInt(chapterParam, 10);
-                    if (!isNaN(parsed) && parsed >= 0) {
-                        targetChapter = parsed;
-                    }
+                    if (!isNaN(parsed) && parsed >= 0) targetChapter = parsed;
                 }
 
                 loadFixedRepo(targetChapter);
-
                 console.log('📚 小说书架已启动，固定仓库:', FIXED_REPO_URL);
             }
 
