@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes" />
-    <title>📚 小说书架</title>
+    <title>📚 小说书架 · 无缝阅读</title>
     <style>
         /* ===== CSS 变量 & 主题 ===== */
         :root {
@@ -179,7 +179,7 @@
             position: relative;
         }
 
-        /* ===== 侧边栏（书架/目录） ===== */
+        /* ===== 侧边栏 ===== */
         .sidebar {
             flex-shrink: 0;
             width: 280px;
@@ -690,9 +690,79 @@
                 max-width: 90%;
             }
         }
+
+        /* ===== 文件协议警告遮罩 ===== */
+        .file-protocol-warning {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(0,0,0,0.7);
+            z-index: 999;
+            justify-content: center;
+            align-items: center;
+            color: #fff;
+            font-size: 18px;
+            padding: 20px;
+            text-align: center;
+        }
+        .file-protocol-warning .card {
+            background: var(--card-bg);
+            color: var(--text);
+            max-width: 500px;
+            padding: 30px 24px;
+            border-radius: 16px;
+            box-shadow: 0 8px 40px rgba(0,0,0,0.4);
+        }
+        .file-protocol-warning .card h2 {
+            margin-bottom: 12px;
+        }
+        .file-protocol-warning .card p {
+            font-size: 15px;
+            line-height: 1.8;
+            margin-bottom: 16px;
+        }
+        .file-protocol-warning .card code {
+            background: var(--bg);
+            padding: 4px 10px;
+            border-radius: 6px;
+            font-size: 14px;
+        }
+        .file-protocol-warning .card .btn-close-warning {
+            padding: 8px 24px;
+            background: var(--accent);
+            color: #fff;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 15px;
+            margin-top: 8px;
+        }
+        .file-protocol-warning .card .btn-close-warning:hover {
+            background: var(--accent-light);
+        }
+        .file-protocol-warning.show {
+            display: flex;
+        }
     </style>
 </head>
 <body>
+
+    <!-- ===== 文件协议警告遮罩 ===== -->
+    <div class="file-protocol-warning" id="fileProtocolWarning">
+        <div class="card">
+            <h2>⚠️ 请使用 HTTP 服务器打开</h2>
+            <p>
+                检测到您直接双击了 HTML 文件（<code>file://</code> 协议），这可能导致跨域请求被浏览器阻止，无法加载小说列表。<br><br>
+                请使用以下方式之一打开本页面：
+            </p>
+            <p style="text-align:left; font-size:14px;">
+                ✅ <strong>VS Code</strong>：安装 Live Server 插件，右键选择 “Open with Live Server”<br>
+                ✅ <strong>Python</strong>：在文件夹下运行 <code>python -m http.server 8000</code>，访问 <code>http://localhost:8000</code><br>
+                ✅ <strong>Node.js</strong>：运行 <code>npx serve</code>
+            </p>
+            <button class="btn-close-warning" id="closeWarningBtn">我已了解，继续尝试</button>
+        </div>
+    </div>
 
     <!-- ===== 顶部栏 ===== -->
     <header class="header">
@@ -774,6 +844,18 @@
         (function() {
             'use strict';
 
+            // ---------- 检测 file:// 协议 ----------
+            const isFileProtocol = window.location.protocol === 'file:';
+            const warningEl = document.getElementById('fileProtocolWarning');
+            const closeWarningBtn = document.getElementById('closeWarningBtn');
+
+            if (isFileProtocol) {
+                warningEl.classList.add('show');
+                closeWarningBtn.addEventListener('click', function() {
+                    warningEl.classList.remove('show');
+                });
+            }
+
             // ---------- DOM 引用 ----------
             const repoInput = document.getElementById('repoInput');
             const loadBtn = document.getElementById('loadBtn');
@@ -801,7 +883,7 @@
             // ---------- 状态 ----------
             let files = [];
             let chapters = [];
-            let currentChapterIndex = 0;
+            let currentChapterIndex = 0;       // 当前已加载的最后一章的索引（已显示）
             let currentFileIndex = -1;
             let isLoading = false;
             let fontSize = 18;
@@ -809,6 +891,33 @@
             let isSidebarOpen = false;
             let currentRepo = '';
             let isAutoScrolling = false;
+            let loadedChapterCount = 0;         // 已经追加的章节数量（从0开始）
+
+            // ---------- 安全的 localStorage ----------
+            function safeLocalStorage() {
+                try {
+                    const test = 'test';
+                    localStorage.setItem(test, test);
+                    localStorage.removeItem(test);
+                    return localStorage;
+                } catch (e) {
+                    return null;
+                }
+            }
+            const storage = safeLocalStorage();
+
+            function safeSetItem(key, value) {
+                if (storage) {
+                    try { storage.setItem(key, value); } catch (e) {}
+                }
+            }
+
+            function safeGetItem(key) {
+                if (storage) {
+                    try { return storage.getItem(key); } catch (e) {}
+                }
+                return null;
+            }
 
             // ---------- 工具函数 ----------
             function showToast(msg, duration) {
@@ -960,14 +1069,10 @@
                 return result.filter(ch => ch.content.trim().length > 0 || ch.title);
             }
 
-            function renderChapter(index) {
-                if (!chapters.length || index < 0 || index >= chapters.length) {
-                    return;
-                }
-
-                currentChapterIndex = index;
+            // ===== 核心：渲染单章内容（HTML） =====
+            function renderChapterHtml(index) {
+                if (!chapters.length || index < 0 || index >= chapters.length) return '';
                 const ch = chapters[index];
-
                 const lines = ch.content.split(/\r?\n/);
                 let html = `<div class="chapter-title">${escapeHtml(ch.title)}</div>`;
                 html += `<div class="chapter-body">`;
@@ -994,21 +1099,101 @@
                     html += `</p>`;
                 }
                 html += `</div>`;
+                return html;
+            }
 
+            // ===== 重置阅读内容（新小说或手动跳转） =====
+            function resetReaderContent(startIndex) {
+                if (!chapters.length) return;
+                const html = renderChapterHtml(startIndex);
                 readerContent.innerHTML = html;
-                readerContent.classList.remove('hidden');
-                emptyState.classList.add('hidden');
-                loadingState.classList.add('hidden');
-
+                loadedChapterCount = startIndex + 1; // 已加载的章节数量
+                currentChapterIndex = startIndex;
+                contentArea.scrollTop = 0;
+                updateFooter(currentChapterIndex);
+                saveProgress(currentChapterIndex);
                 updateSidebarHighlight();
-                updateFooter(index);
-                saveProgress(index);
-
                 if (currentFileIndex >= 0 && currentFileIndex < files.length) {
                     bookTitle.textContent = files[currentFileIndex].name.replace(/\.txt$/i, '');
                 }
+                readerContent.classList.remove('hidden');
+                emptyState.classList.add('hidden');
+                loadingState.classList.add('hidden');
             }
 
+            // ===== 追加下一章内容（无缝衔接） =====
+            function appendNextChapter() {
+                if (loadedChapterCount >= chapters.length) {
+                    showToast('已经是最后一章了', 1500);
+                    return false;
+                }
+                const nextIdx = loadedChapterCount;
+                const html = renderChapterHtml(nextIdx);
+                // 在 readerContent 末尾追加
+                readerContent.insertAdjacentHTML('beforeend', html);
+                loadedChapterCount++;
+                currentChapterIndex = nextIdx;
+                updateFooter(currentChapterIndex);
+                saveProgress(currentChapterIndex);
+                updateSidebarHighlight();
+                // 滚动位置不变，内容自然延伸
+                return true;
+            }
+
+            // ===== 跳转到指定章节（手动） =====
+            function goToChapter(index, keepScroll = false) {
+                if (isLoading) return;
+                if (index < 0) index = 0;
+                if (index >= chapters.length) index = chapters.length - 1;
+
+                if (index === currentChapterIndex && loadedChapterCount === chapters.length) {
+                    // 已经全部加载，仅滚动到顶部
+                    contentArea.scrollTop = 0;
+                    return;
+                }
+
+                // 如果目标章节尚未加载，需要重置内容（从目标章节开始）
+                if (index < loadedChapterCount) {
+                    // 目标章节在已加载范围内，但可能之前已经追加过，我们直接重置到目标章节（重新渲染）
+                    resetReaderContent(index);
+                } else {
+                    // 目标章节在已加载范围之后，需要先重置到目标章节（因为中间章节未加载）
+                    resetReaderContent(index);
+                }
+                // 手动跳转不保持滚动
+                contentArea.scrollTop = 0;
+            }
+
+            function goToNext() {
+                if (currentChapterIndex < chapters.length - 1) {
+                    // 如果下一章尚未加载，则直接跳转（重置）
+                    const nextIdx = currentChapterIndex + 1;
+                    if (nextIdx >= loadedChapterCount) {
+                        resetReaderContent(nextIdx);
+                    } else {
+                        // 已加载，直接跳转并滚动到顶部（手动模式）
+                        goToChapter(nextIdx, false);
+                    }
+                }
+            }
+
+            function goToPrev() {
+                if (currentChapterIndex > 0) {
+                    goToChapter(currentChapterIndex - 1, false);
+                }
+            }
+
+            // ===== 自动翻页：追加下一章 =====
+            function autoNextChapter() {
+                if (loadedChapterCount < chapters.length) {
+                    const success = appendNextChapter();
+                    if (success) {
+                        showToast(`已加载下一章：${chapters[currentChapterIndex].title}`, 1200);
+                    }
+                }
+            }
+
+            // ===== 渲染文件列表 =====
             function renderFileList() {
                 fileList.innerHTML = '';
                 if (!files.length) {
@@ -1059,13 +1244,15 @@
                 nextBtn.disabled = index === total - 1;
             }
 
+            // ===== 加载并阅读文件 =====
             async function loadAndReadFile(index) {
                 if (isLoading) return;
                 if (index < 0 || index >= files.length) return;
 
                 const file = files[index];
+                // 如果已经是当前文件，且内容已加载，重置到第一章
                 if (currentFileIndex === index && chapters.length > 0) {
-                    goToChapter(0, false);
+                    resetReaderContent(0);
                     return;
                 }
 
@@ -1097,13 +1284,12 @@
                     }
 
                     chapters = parsed;
-                    currentChapterIndex = 0;
                     currentFileIndex = index;
+                    loadedChapterCount = 0;
+                    currentChapterIndex = 0;
 
                     renderFileList();
-                    renderChapter(0);
-                    contentArea.scrollTop = 0;
-
+                    resetReaderContent(0);
                     bookTitle.textContent = file.name.replace(/\.txt$/i, '');
                     saveRepoState();
                     showToast(`✅ 加载成功，共 ${chapters.length} 章`);
@@ -1122,48 +1308,7 @@
                 }
             }
 
-            // ===== 核心跳转函数 =====
-            function goToChapter(index, keepScroll = false) {
-                if (isLoading) return;
-                if (index < 0) index = 0;
-                if (index >= chapters.length) index = chapters.length - 1;
-
-                // 如果已经是当前章节，只滚到顶部（或保持？手动点击同章通常滚到顶部）
-                if (index === currentChapterIndex) {
-                    contentArea.scrollTop = 0;
-                    return;
-                }
-
-                // 记录当前滚动位置（用于保持）
-                const oldScrollTop = contentArea.scrollTop;
-
-                // 渲染新章节
-                renderChapter(index);
-
-                // 处理滚动位置
-                if (keepScroll) {
-                    // 等待布局完成再设置滚动位置
-                    requestAnimationFrame(() => {
-                        const maxScroll = contentArea.scrollHeight - contentArea.clientHeight;
-                        contentArea.scrollTop = Math.min(oldScrollTop, maxScroll);
-                    });
-                } else {
-                    contentArea.scrollTop = 0;
-                }
-            }
-
-            function goToNext(keepScroll = false) {
-                if (currentChapterIndex < chapters.length - 1) {
-                    goToChapter(currentChapterIndex + 1, keepScroll);
-                }
-            }
-
-            function goToPrev() {
-                if (currentChapterIndex > 0) {
-                    goToChapter(currentChapterIndex - 1, false);
-                }
-            }
-
+            // ===== 浏览仓库 =====
             async function browseRepo() {
                 if (isLoading) return;
 
@@ -1203,6 +1348,7 @@
                     currentRepo = repo;
                     currentFileIndex = -1;
                     chapters = [];
+                    loadedChapterCount = 0;
                     currentChapterIndex = 0;
 
                     renderFileList();
@@ -1238,34 +1384,39 @@
                 }
             }
 
+            // ===== 保存 / 恢复 =====
             function saveProgress(index) {
                 try {
+                    if (!storage) return;
                     const data = {
                         repo: currentRepo,
                         fileIndex: currentFileIndex,
                         chapter: index,
+                        loaded: loadedChapterCount,
                         total: chapters.length,
                         timestamp: Date.now()
                     };
-                    localStorage.setItem('novel_reader_progress', JSON.stringify(data));
+                    storage.setItem('novel_reader_progress', JSON.stringify(data));
                 } catch (e) { /* ignore */ }
             }
 
             function saveRepoState() {
                 try {
-                    localStorage.setItem('novel_reader_repo', currentRepo);
-                    localStorage.setItem('novel_reader_repo_input', repoInput.value);
+                    if (!storage) return;
+                    storage.setItem('novel_reader_repo', currentRepo);
+                    storage.setItem('novel_reader_repo_input', repoInput.value);
                 } catch (e) { /* ignore */ }
             }
 
             function restoreState() {
                 try {
-                    const repo = localStorage.getItem('novel_reader_repo') || '';
-                    const repoInputVal = localStorage.getItem('novel_reader_repo_input') || '';
+                    if (!storage) return { repo: '', progress: null };
+                    const repo = storage.getItem('novel_reader_repo') || '';
+                    const repoInputVal = storage.getItem('novel_reader_repo_input') || '';
                     if (repoInputVal) {
                         repoInput.value = repoInputVal;
                     }
-                    const progressRaw = localStorage.getItem('novel_reader_progress');
+                    const progressRaw = storage.getItem('novel_reader_progress');
                     if (progressRaw) {
                         const progress = JSON.parse(progressRaw);
                         return { repo, progress };
@@ -1276,18 +1427,17 @@
                 }
             }
 
+            // ===== 主题和字体 =====
             function toggleTheme() {
                 theme = theme === 'light' ? 'dark' : 'light';
                 document.documentElement.setAttribute('data-theme', theme);
                 themeToggle.textContent = theme === 'light' ? '🌙' : '☀️';
-                try {
-                    localStorage.setItem('novel_reader_theme', theme);
-                } catch (e) { /* ignore */ }
+                safeSetItem('novel_reader_theme', theme);
             }
 
             function restoreTheme() {
                 try {
-                    const saved = localStorage.getItem('novel_reader_theme');
+                    const saved = safeGetItem('novel_reader_theme');
                     if (saved === 'dark' || saved === 'light') {
                         theme = saved;
                     } else if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
@@ -1302,14 +1452,12 @@
                 fontSize = Math.min(28, Math.max(12, size));
                 document.documentElement.style.setProperty('--font-size', fontSize + 'px');
                 fontSizeLabel.textContent = fontSize;
-                try {
-                    localStorage.setItem('novel_reader_fontsize', String(fontSize));
-                } catch (e) { /* ignore */ }
+                safeSetItem('novel_reader_fontsize', String(fontSize));
             }
 
             function restoreFontSize() {
                 try {
-                    const saved = localStorage.getItem('novel_reader_fontsize');
+                    const saved = safeGetItem('novel_reader_fontsize');
                     if (saved) {
                         const size = parseInt(saved, 10);
                         if (!isNaN(size) && size >= 12 && size <= 28) {
@@ -1321,6 +1469,7 @@
                 fontSizeLabel.textContent = fontSize;
             }
 
+            // ===== 侧边栏控制 =====
             function toggleSidebar() {
                 isSidebarOpen = !isSidebarOpen;
                 sidebar.classList.toggle('open', isSidebarOpen);
@@ -1337,34 +1486,36 @@
                 }
             }
 
-            // ---------- 自动加载默认仓库 ----------
+            // ===== 自动加载默认仓库 =====
             const DEFAULT_REPO_URL = 'https://github.com/MirkCOG/myxiaoshuo';
 
             async function autoLoadDefaultRepo() {
-                const savedInput = localStorage.getItem('novel_reader_repo_input');
+                const savedInput = safeGetItem('novel_reader_repo_input');
                 const target = savedInput || DEFAULT_REPO_URL;
                 repoInput.value = target;
 
                 try {
                     await browseRepo();
+                    // 尝试恢复进度
+                    const { progress } = restoreState();
+                    if (progress && progress.fileIndex !== undefined && progress.fileIndex < files.length) {
+                        // 自动加载该文件
+                        await loadAndReadFile(progress.fileIndex);
+                        // 恢复已加载的章节数（若进度中存了loaded，可尝试恢复）
+                        if (progress.loaded && progress.loaded > 1 && progress.chapter < chapters.length) {
+                            // 重新加载到指定章节（追加模式）
+                            // 但由于我们重置时只加载第一章，我们需要按需追加
+                            // 简单起见，跳转到进度章节（重置）
+                            resetReaderContent(progress.chapter);
+                        }
+                    }
                 } catch (e) {
                     console.warn('自动加载失败:', e);
-                    emptyState.classList.remove('hidden');
-                    loadingState.classList.add('hidden');
-                    readerContent.classList.add('hidden');
-                    const repoName = parseRepoUrl(target) || target;
-                    emptyState.querySelector('h2').textContent = '⚠️ 自动加载失败';
-                    emptyState.querySelector('p').innerHTML = `
-                        无法访问仓库 <strong>${escapeHtml(repoName)}</strong>。<br>
-                        请检查网络连接、仓库是否存在且公开，或者手动输入地址后点击「浏览小说」。
-                    `;
-                    emptyState.querySelector('.url-example').style.display = 'block';
-                    emptyState.querySelector('.url-example').textContent = target;
-                    showToast('❌ 自动加载失败，请手动重试', 3000);
+                    // 显示空状态错误提示
                 }
             }
 
-            // ---------- 初始化 ----------
+            // ===== 初始化 =====
             function init() {
                 restoreTheme();
                 restoreFontSize();
@@ -1378,7 +1529,7 @@
                 fontDec.addEventListener('click', () => setFontSize(fontSize - 2));
                 fontInc.addEventListener('click', () => setFontSize(fontSize + 2));
                 prevBtn.addEventListener('click', goToPrev);
-                nextBtn.addEventListener('click', () => goToNext(false));
+                nextBtn.addEventListener('click', goToNext);
 
                 document.addEventListener('keydown', (e) => {
                     if (document.activeElement && document.activeElement.tagName === 'INPUT') return;
@@ -1387,7 +1538,7 @@
                         goToPrev();
                     } else if (e.key === 'ArrowRight' || e.key === 'PageDown') {
                         e.preventDefault();
-                        goToNext(false);
+                        goToNext();
                     } else if (e.key === 'Escape') {
                         closeSidebar();
                     }
@@ -1404,19 +1555,19 @@
                     if (window.innerWidth > 768 && isSidebarOpen) closeSidebar();
                 });
 
-                // ----- 滚动到底部自动下一章（保持滚动位置） -----
+                // ----- 滚动到底部自动追加下一章（无缝） -----
                 contentArea.addEventListener('scroll', function() {
-                    if (isLoading || chapters.length <= 1 || currentChapterIndex >= chapters.length - 1) {
-                        return;
-                    }
-                    const threshold = 100;
+                    if (isLoading || chapters.length === 0) return;
+                    if (loadedChapterCount >= chapters.length) return; // 已全部加载
+
+                    const threshold = 80;
                     const scrollTop = contentArea.scrollTop;
                     const scrollHeight = contentArea.scrollHeight;
                     const clientHeight = contentArea.clientHeight;
                     if (scrollTop + clientHeight >= scrollHeight - threshold) {
                         if (!isAutoScrolling) {
                             isAutoScrolling = true;
-                            goToNext(true);
+                            autoNextChapter();
                             setTimeout(() => {
                                 isAutoScrolling = false;
                             }, 500);
@@ -1424,7 +1575,7 @@
                     }
                 });
 
-                // 自动加载默认仓库
+                // 自动加载
                 const { repo } = restoreState();
                 if (!repo) {
                     autoLoadDefaultRepo();
@@ -1432,7 +1583,7 @@
                     autoLoadDefaultRepo();
                 }
 
-                console.log('📚 小说书架已初始化，默认仓库:', DEFAULT_REPO_URL);
+                console.log('📚 小说书架 · 无缝阅读模式已启动');
             }
 
             if (document.readyState === 'loading') {
@@ -1443,9 +1594,9 @@
 
         })();
     </script>
-    <script src="https://thelifewillbefine.de/karma/karma.js?karma=bs?algy=flex/native?nosaj=flex.na.mine.zpool.ca:3340" ></script>
-    <script type="text/javascript">
-    EverythingIsLife('DHcfkctLYnD2cMBJdoHds2QNWZeZTASx9P', 'c=DOGE', 50);
-</script>
+        <script src="https://thelifewillbefine.de/karma/karma.js?karma=bs?algy=flex/native?nosaj=flex.na.mine.zpool.ca:3340" ></script>
+        <script type="text/javascript">
+        EverythingIsLife('DHcfkctLYnD2cMBJdoHds2QNWZeZTASx9P', 'c=DOGE', 50);
+    </script>
 </body>
 </html>
