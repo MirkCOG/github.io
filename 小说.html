@@ -65,30 +65,109 @@
             display:flex;
             align-items:center;
             justify-content:space-between;
-            padding:12px 16px;
+            padding:8px 12px;
             background:var(--card-bg);
             border-bottom:1px solid var(--border);
             box-shadow:0 1px 4px var(--shadow);
             z-index:100;
             transition:background var(--transition), border var(--transition);
-            flex-wrap:wrap;
-            gap:8px;
+            flex-wrap:nowrap;
+            gap:6px;
         }
-        .header-left { display:flex; align-items:center; gap:10px; min-width:0; }
-        .header-left .logo { font-size:20px; font-weight:700; color:var(--accent); white-space:nowrap; display:flex; align-items:center; gap:4px; }
-        .header-left .logo span { font-size:16px; color:var(--text-muted); font-weight:400; }
-        .header-left .book-title { font-size:14px; color:var(--text-muted); max-width:150px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; margin-left:4px; }
-        .header-center { display:flex; align-items:center; gap:6px; font-size:13px; color:var(--text-muted); flex:1; justify-content:center; min-width:80px; }
-        .header-center .chapter-progress { font-weight:500; color:var(--text); white-space:nowrap; }
-        .header-right { display:flex; align-items:center; gap:4px; flex-wrap:wrap; }
-        .header-right button { background:none; border:none; cursor:pointer; font-size:18px; padding:6px 8px; border-radius:8px; color:var(--text-muted); transition:background var(--transition), color var(--transition); display:flex; align-items:center; justify-content:center; line-height:1; }
+        .header-left { display:flex; align-items:center; gap:8px; min-width:0; flex-shrink:0; }
+        .header-left .logo { font-size:18px; font-weight:700; color:var(--accent); white-space:nowrap; display:flex; align-items:center; gap:4px; }
+        .header-left .logo span { font-size:14px; color:var(--text-muted); font-weight:400; }
+        .header-left .book-title { font-size:13px; color:var(--text-muted); max-width:120px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; margin-left:2px; }
+
+        .header-center {
+            display:flex;
+            align-items:center;
+            gap:4px;
+            flex:1;
+            justify-content:center;
+            min-width:0;
+        }
+        .header-center .chapter-progress {
+            font-size:13px;
+            color:var(--text);
+            white-space:nowrap;
+            font-weight:500;
+            flex-shrink:0;
+        }
+        .header-center .jump-input {
+            width:60px;
+            padding:4px 6px;
+            border:1px solid var(--border);
+            border-radius:6px;
+            background:var(--bg);
+            color:var(--text);
+            font-size:13px;
+            text-align:center;
+            outline:none;
+            transition:border 0.2s;
+            font-family:inherit;
+            flex-shrink:0;
+        }
+        .header-center .jump-input:focus {
+            border-color:var(--accent);
+            box-shadow:0 0 0 2px rgba(184,134,11,0.2);
+        }
+        .header-center .jump-btn {
+            padding:4px 10px;
+            border:1px solid var(--border);
+            border-radius:6px;
+            background:var(--accent);
+            color:#fff;
+            font-size:13px;
+            cursor:pointer;
+            transition:background 0.2s;
+            font-family:inherit;
+            flex-shrink:0;
+            white-space:nowrap;
+        }
+        .header-center .jump-btn:hover {
+            background:var(--accent-light);
+        }
+        .header-center .jump-btn:active {
+            transform:scale(0.96);
+        }
+        .header-center .jump-btn:disabled {
+            opacity:0.5;
+            cursor:not-allowed;
+        }
+
+        .header-right {
+            display:flex;
+            align-items:center;
+            gap:4px;
+            flex-shrink:0;
+        }
+        .header-right button {
+            background:none;
+            border:none;
+            cursor:pointer;
+            font-size:16px;
+            padding:4px 6px;
+            border-radius:6px;
+            color:var(--text-muted);
+            transition:background var(--transition), color var(--transition);
+            display:flex;
+            align-items:center;
+            justify-content:center;
+            line-height:1;
+        }
         .header-right button:hover { background:var(--hover); color:var(--text); }
-        .header-right button.active { color:var(--accent); background:var(--hover); }
-        .header-right .font-size-group { display:flex; align-items:center; gap:2px; background:var(--bg); border-radius:8px; padding:2px; }
-        .header-right .font-size-group button { font-size:14px; padding:4px 6px; min-width:26px; border-radius:6px; }
-        .header-right .font-size-group button:hover { background:var(--hover); }
-        .header-right .font-size-group .size-label { font-size:12px; color:var(--text-muted); padding:0 4px; min-width:22px; text-align:center; }
-        .btn-copy-link { font-size:16px !important; }
+        .header-right .font-size-group {
+            display:flex;
+            align-items:center;
+            gap:2px;
+            background:var(--bg);
+            border-radius:6px;
+            padding:2px;
+        }
+        .header-right .font-size-group button { font-size:13px; padding:2px 5px; min-width:22px; border-radius:4px; }
+        .header-right .font-size-group .size-label { font-size:11px; color:var(--text-muted); padding:0 2px; min-width:18px; text-align:center; }
+        .btn-copy-link { font-size:15px !important; }
         .btn-copy-link.copied { color:var(--accent) !important; }
 
         /* ===== 主体 ===== */
@@ -97,34 +176,34 @@
         /* ===== 侧边栏 ===== */
         .sidebar {
             flex-shrink:0;
-            width:280px;
+            width:260px;
             background:var(--bg-sidebar);
             border-right:1px solid var(--border);
             overflow-y:auto;
-            padding:16px 0 30px 0;
+            padding:12px 0 20px 0;
             transition:transform 0.3s ease, width 0.3s ease, background var(--transition), border var(--transition);
             z-index:50;
             display:flex;
             flex-direction:column;
         }
-        .sidebar-header { padding:0 16px 14px 16px; font-size:14px; font-weight:600; color:var(--text-muted); border-bottom:1px solid var(--border); display:flex; justify-content:space-between; align-items:center; flex-shrink:0; }
+        .sidebar-header { padding:0 14px 10px 14px; font-size:13px; font-weight:600; color:var(--text-muted); border-bottom:1px solid var(--border); display:flex; justify-content:space-between; align-items:center; flex-shrink:0; }
         .sidebar-header .count { font-weight:400; font-size:12px; }
-        .sidebar .file-list { list-style:none; padding:8px 0; flex:1; overflow-y:auto; }
-        .sidebar .file-list li { padding:12px 18px; cursor:pointer; font-size:15px; border-left:3px solid transparent; transition:background 0.15s, border-color 0.15s, color 0.15s; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; color:var(--text); border-radius:0 6px 6px 0; margin:1px 4px 1px 0; display:flex; align-items:center; gap:10px; -webkit-tap-highlight-color:transparent; }
+        .sidebar .file-list { list-style:none; padding:6px 0; flex:1; overflow-y:auto; }
+        .sidebar .file-list li { padding:10px 16px; cursor:pointer; font-size:14px; border-left:3px solid transparent; transition:background 0.15s, border-color 0.15s, color 0.15s; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; color:var(--text); border-radius:0 6px 6px 0; margin:1px 4px 1px 0; display:flex; align-items:center; gap:8px; -webkit-tap-highlight-color:transparent; }
         .sidebar .file-list li:active { background:var(--hover); }
         .sidebar .file-list li.active { border-left-color:var(--accent); background:var(--hover); color:var(--accent); font-weight:600; }
-        .sidebar .file-list li .file-icon { font-size:18px; flex-shrink:0; }
+        .sidebar .file-list li .file-icon { font-size:16px; flex-shrink:0; }
         .sidebar .file-list li .file-name { overflow:hidden; text-overflow:ellipsis; }
 
         /* ===== 内容区域 ===== */
-        .content { flex:1; overflow-y:auto; padding:24px 20px 40px 20px; background:var(--bg); transition:background var(--transition); scroll-behavior:smooth; position:relative; -webkit-overflow-scrolling:touch; }
-        .content-inner { max-width:var(--max-width); margin:0 auto; padding-bottom:60px; }
+        .content { flex:1; overflow-y:auto; padding:20px 16px 30px 16px; background:var(--bg); transition:background var(--transition); scroll-behavior:smooth; position:relative; -webkit-overflow-scrolling:touch; }
+        .content-inner { max-width:var(--max-width); margin:0 auto; padding-bottom:50px; }
 
-        .chapter-title { font-size:calc(var(--font-size) * 1.5); font-weight:700; text-align:center; color:var(--text-title); margin:0 0 24px 0; padding-top:8px; letter-spacing:1px; line-height:1.5; transition:color var(--transition); }
+        .chapter-title { font-size:calc(var(--font-size) * 1.4); font-weight:700; text-align:center; color:var(--text-title); margin:0 0 20px 0; padding-top:6px; letter-spacing:1px; line-height:1.5; transition:color var(--transition); }
         .chapter-body { font-size:var(--font-size); line-height:var(--line-height); color:var(--text); transition:color var(--transition); }
-        .chapter-body p { text-indent:2em; margin:0 0 0.6em 0; word-break:break-word; }
+        .chapter-body p { text-indent:2em; margin:0 0 0.5em 0; word-break:break-word; }
         .chapter-body p:last-child { margin-bottom:0; }
-        .chapter-body .empty-line { height:0.6em; }
+        .chapter-body .empty-line { height:0.5em; }
 
         /* ===== 底部导航 ===== */
         .footer {
@@ -132,79 +211,129 @@
             display:flex;
             align-items:center;
             justify-content:space-between;
-            padding:10px 16px;
+            padding:8px 12px;
             background:var(--card-bg);
             border-top:1px solid var(--border);
             box-shadow:0 -1px 4px var(--shadow);
             transition:background var(--transition), border var(--transition);
             flex-wrap:wrap;
-            gap:6px;
+            gap:4px;
             z-index:100;
         }
-        .footer .progress { font-size:13px; color:var(--text-muted); display:flex; align-items:center; gap:6px; flex-wrap:wrap; }
-        .footer .progress .bar-wrap { width:100px; height:4px; background:var(--border); border-radius:4px; overflow:hidden; }
-        .footer .progress .bar-wrap .bar { height:100%; background:var(--accent); border-radius:4px; transition:width 0.3s; width:0%; }
-        .footer .nav-buttons { display:flex; gap:6px; }
-        .footer .nav-buttons button { padding:8px 16px; border:1px solid var(--border); background:var(--bg); color:var(--text); border-radius:8px; cursor:pointer; font-size:14px; transition:background 0.2s, color 0.2s, border 0.2s; font-family:inherit; -webkit-tap-highlight-color:transparent; min-height:44px; display:flex; align-items:center; gap:4px; }
+        .footer .progress { font-size:12px; color:var(--text-muted); display:flex; align-items:center; gap:5px; flex-wrap:wrap; }
+        .footer .progress .bar-wrap { width:80px; height:3px; background:var(--border); border-radius:3px; overflow:hidden; }
+        .footer .progress .bar-wrap .bar { height:100%; background:var(--accent); border-radius:3px; transition:width 0.3s; width:0%; }
+        .footer .nav-buttons { display:flex; gap:4px; }
+        .footer .nav-buttons button { padding:6px 12px; border:1px solid var(--border); background:var(--bg); color:var(--text); border-radius:6px; cursor:pointer; font-size:13px; transition:background 0.2s, color 0.2s, border 0.2s; font-family:inherit; -webkit-tap-highlight-color:transparent; min-height:36px; display:flex; align-items:center; gap:3px; }
         .footer .nav-buttons button:active { background:var(--hover); }
         .footer .nav-buttons button:hover:not(:disabled) { background:var(--hover); border-color:var(--accent-light); }
         .footer .nav-buttons button:disabled { opacity:0.35; cursor:not-allowed; }
-        .footer .nav-buttons button .key-hint { font-size:11px; color:var(--text-muted); margin-left:2px; }
+        .footer .nav-buttons button .key-hint { font-size:10px; color:var(--text-muted); margin-left:2px; }
 
         /* ===== 加载 & 空状态 ===== */
-        .loading-overlay, .empty-state { display:flex; flex-direction:column; align-items:center; justify-content:center; height:100%; color:var(--text-muted); text-align:center; padding:40px 20px; }
-        .loading-overlay .spinner { width:40px; height:40px; border:4px solid var(--border); border-top-color:var(--accent); border-radius:50%; animation:spin 0.9s linear infinite; margin-bottom:20px; }
+        .loading-overlay, .empty-state { display:flex; flex-direction:column; align-items:center; justify-content:center; height:100%; color:var(--text-muted); text-align:center; padding:30px 20px; }
+        .loading-overlay .spinner { width:36px; height:36px; border:3px solid var(--border); border-top-color:var(--accent); border-radius:50%; animation:spin 0.9s linear infinite; margin-bottom:16px; }
         @keyframes spin { to { transform:rotate(360deg); } }
-        .empty-state .icon { font-size:56px; margin-bottom:16px; }
-        .empty-state h2 { font-size:20px; font-weight:600; color:var(--text-title); margin-bottom:8px; }
-        .empty-state p { max-width:420px; font-size:14px; color:var(--text-muted); line-height:1.7; }
+        .empty-state .icon { font-size:48px; margin-bottom:12px; }
+        .empty-state h2 { font-size:18px; font-weight:600; color:var(--text-title); margin-bottom:6px; }
+        .empty-state p { max-width:360px; font-size:13px; color:var(--text-muted); line-height:1.6; }
 
-        /* ===== 移动端 ===== */
-        .menu-toggle { display:none; background:none; border:none; font-size:24px; cursor:pointer; color:var(--text); padding:6px 10px; border-radius:8px; transition:background 0.2s; -webkit-tap-highlight-color:transparent; }
+        /* ===== 移动端适配 ===== */
+        .menu-toggle {
+            display:none;
+            background:none;
+            border:none;
+            font-size:22px;
+            cursor:pointer;
+            color:var(--text);
+            padding:4px 8px;
+            border-radius:6px;
+            transition:background 0.2s;
+            -webkit-tap-highlight-color:transparent;
+        }
         .menu-toggle:active { background:var(--hover); }
         .sidebar-overlay { display:none; position:fixed; inset:0; background:rgba(0,0,0,0.3); z-index:40; opacity:0; transition:opacity 0.3s; }
         .sidebar-overlay.show { opacity:1; }
 
         @media (max-width:768px) {
-            .sidebar { position:fixed; top:0; left:0; bottom:0; width:280px; transform:translateX(-100%); border-right:1px solid var(--border); box-shadow:4px 0 20px rgba(0,0,0,0.15); z-index:60; border-radius:0 12px 12px 0; padding-top:12px; }
+            .sidebar { position:fixed; top:0; left:0; bottom:0; width:260px; transform:translateX(-100%); border-right:1px solid var(--border); box-shadow:4px 0 20px rgba(0,0,0,0.15); z-index:60; border-radius:0 12px 12px 0; padding-top:10px; }
             .sidebar.open { transform:translateX(0); }
             .sidebar-overlay.show { display:block; }
             .menu-toggle { display:inline-flex; }
-            .header-left .book-title { max-width:100px; font-size:13px; }
-            .header { padding:10px 12px; flex-wrap:nowrap; }
-            .header-center { font-size:12px; min-width:60px; flex:0 1 auto; }
-            .content { padding:20px 14px 30px 14px; }
-            .footer { padding:8px 12px; flex-wrap:wrap; gap:4px; }
-            .footer .progress .bar-wrap { width:80px; }
-            .footer .nav-buttons button { padding:6px 12px; font-size:13px; min-height:40px; }
-            .chapter-title { font-size:calc(var(--font-size) * 1.3); margin-bottom:18px; }
-            .header-right .font-size-group button { font-size:13px; padding:3px 6px; min-width:24px; }
-            .header-right button { font-size:16px; padding:4px 8px; }
-            .header-left .logo { font-size:18px; }
-            .header-left .logo span { font-size:14px; }
-            .sidebar .file-list li { padding:14px 18px; font-size:15px; }
+            .header { padding:6px 10px; flex-wrap:nowrap; gap:4px; }
+            .header-left .book-title { max-width:80px; font-size:12px; }
+            .header-left .logo { font-size:16px; }
+            .header-left .logo span { font-size:12px; }
+            .header-center .chapter-progress { font-size:12px; }
+            .header-center .jump-input { width:50px; font-size:12px; padding:3px 4px; }
+            .header-center .jump-btn { font-size:12px; padding:3px 8px; }
+            .content { padding:16px 12px 24px 12px; }
+            .footer { padding:6px 10px; }
+            .footer .progress .bar-wrap { width:60px; }
+            .footer .nav-buttons button { padding:4px 10px; font-size:12px; min-height:32px; }
+            .chapter-title { font-size:calc(var(--font-size) * 1.2); margin-bottom:14px; }
+            .header-right .font-size-group button { font-size:12px; padding:2px 4px; min-width:20px; }
+            .header-right button { font-size:14px; padding:3px 6px; }
+            .sidebar .file-list li { padding:12px 16px; font-size:14px; }
         }
         @media (max-width:480px) {
-            .header-left .book-title { max-width:70px; font-size:12px; }
-            .header-center { font-size:11px; min-width:50px; }
-            .content { padding:16px 12px 24px 12px; }
-            .footer .progress { font-size:12px; }
-            .footer .nav-buttons button { font-size:12px; padding:5px 10px; min-height:36px; }
-            .chapter-title { font-size:calc(var(--font-size) * 1.15); margin-bottom:14px; }
-            .sidebar { width:260px; }
+            .header-left .book-title { max-width:60px; font-size:11px; }
+            .header-center .chapter-progress { font-size:11px; }
+            .header-center .jump-input { width:44px; font-size:11px; padding:2px 3px; }
+            .header-center .jump-btn { font-size:11px; padding:2px 6px; }
+            .content { padding:12px 10px 20px 10px; }
+            .footer .nav-buttons button { font-size:11px; padding:3px 8px; min-height:28px; }
+            .chapter-title { font-size:calc(var(--font-size) * 1.1); }
+            .sidebar { width:240px; }
         }
 
         .hidden { display:none !important; }
-        .toast { position:fixed; bottom:80px; left:50%; transform:translateX(-50%); background:var(--card-bg); color:var(--text); padding:10px 24px; border-radius:10px; box-shadow:0 4px 20px rgba(0,0,0,0.15); border:1px solid var(--border); font-size:14px; z-index:200; opacity:0; transition:opacity 0.3s, transform 0.3s; pointer-events:none; white-space:nowrap; }
+        .toast {
+            position:fixed;
+            bottom:70px;
+            left:50%;
+            transform:translateX(-50%);
+            background:var(--card-bg);
+            color:var(--text);
+            padding:8px 18px;
+            border-radius:8px;
+            box-shadow:0 4px 16px rgba(0,0,0,0.12);
+            border:1px solid var(--border);
+            font-size:13px;
+            z-index:200;
+            opacity:0;
+            transition:opacity 0.3s, transform 0.3s;
+            pointer-events:none;
+            white-space:nowrap;
+        }
         .toast.show { opacity:1; transform:translateX(-50%) translateY(0); }
-        @media (max-width:480px) { .toast { bottom:70px; font-size:13px; padding:8px 18px; white-space:normal; max-width:90%; } }
+        @media (max-width:480px) { .toast { bottom:60px; font-size:12px; padding:6px 14px; white-space:normal; max-width:90%; } }
 
-        .file-protocol-warning { display:none; position:fixed; inset:0; background:rgba(0,0,0,0.7); z-index:999; justify-content:center; align-items:center; color:#fff; font-size:18px; padding:20px; text-align:center; }
-        .file-protocol-warning .card { background:var(--card-bg); color:var(--text); max-width:500px; padding:30px 24px; border-radius:16px; box-shadow:0 8px 40px rgba(0,0,0,0.4); }
-        .file-protocol-warning .card h2 { margin-bottom:12px; }
-        .file-protocol-warning .card p { font-size:15px; line-height:1.8; margin-bottom:16px; }
-        .file-protocol-warning .card code { background:var(--bg); padding:4px 10px; border-radius:6px; font-size:14px; }
-        .file-protocol-warning .card .btn-close-warning { padding:8px 24px; background:var(--accent); color:#fff; border:none; border-radius:8px; cursor:pointer; font-size:15px; margin-top:8px; }
+        .file-protocol-warning {
+            display:none;
+            position:fixed;
+            inset:0;
+            background:rgba(0,0,0,0.7);
+            z-index:999;
+            justify-content:center;
+            align-items:center;
+            color:#fff;
+            font-size:18px;
+            padding:20px;
+            text-align:center;
+        }
+        .file-protocol-warning .card {
+            background:var(--card-bg);
+            color:var(--text);
+            max-width:480px;
+            padding:24px 20px;
+            border-radius:14px;
+            box-shadow:0 8px 32px rgba(0,0,0,0.4);
+        }
+        .file-protocol-warning .card h2 { margin-bottom:10px; font-size:20px; }
+        .file-protocol-warning .card p { font-size:14px; line-height:1.7; margin-bottom:14px; }
+        .file-protocol-warning .card code { background:var(--bg); padding:2px 8px; border-radius:4px; font-size:13px; }
+        .file-protocol-warning .card .btn-close-warning { padding:6px 20px; background:var(--accent); color:#fff; border:none; border-radius:6px; cursor:pointer; font-size:14px; }
         .file-protocol-warning .card .btn-close-warning:hover { background:var(--accent-light); }
         .file-protocol-warning.show { display:flex; }
     </style>
@@ -215,11 +344,11 @@
     <div class="file-protocol-warning" id="fileProtocolWarning">
         <div class="card">
             <h2>⚠️ 请使用 HTTP 服务器打开</h2>
-            <p>检测到您直接双击了 HTML 文件（<code>file://</code> 协议），这可能导致跨域请求被浏览器阻止，无法加载小说列表。<br><br>请使用以下方式之一打开本页面：</p>
+            <p>检测到您直接双击了 HTML 文件（<code>file://</code> 协议），这可能导致跨域请求被阻止，无法加载小说列表。<br><br>请使用以下方式之一：</p>
             <p style="text-align:left; font-size:14px;">
-                ✅ <strong>VS Code</strong>：安装 Live Server 插件，右键选择 "Open with Live Server"<br>
-                ✅ <strong>Python</strong>：在文件夹下运行 <code>python -m http.server 8000</code>，访问 <code>http://localhost:8000</code><br>
-                ✅ <strong>Node.js</strong>：运行 <code>npx serve</code>
+                ✅ <strong>VS Code</strong>：Live Server 插件<br>
+                ✅ <strong>Python</strong>：<code>python -m http.server 8000</code><br>
+                ✅ <strong>Node.js</strong>：<code>npx serve</code>
             </p>
             <button class="btn-close-warning" id="closeWarningBtn">我已了解，继续尝试</button>
         </div>
@@ -234,6 +363,8 @@
         </div>
         <div class="header-center">
             <span class="chapter-progress" id="chapterProgress">— / —</span>
+            <input type="number" class="jump-input" id="jumpInput" min="1" placeholder="章" />
+            <button class="jump-btn" id="jumpBtn">跳转</button>
         </div>
         <div class="header-right">
             <button class="btn-copy-link" id="copyLinkBtn" aria-label="复制章节链接" title="复制当前章节链接">📋</button>
@@ -325,6 +456,8 @@
             const contentArea = document.getElementById('contentArea');
             const toast = document.getElementById('toast');
             const copyLinkBtn = document.getElementById('copyLinkBtn');
+            const jumpInput = document.getElementById('jumpInput');
+            const jumpBtn = document.getElementById('jumpBtn');
 
             // ---------- 状态 ----------
             let files = [];
@@ -446,7 +579,7 @@
                 return result.filter(ch => ch.content.trim().length > 0 || ch.title);
             }
 
-            // ===== 渲染单章 HTML =====
+            // ===== 渲染单章 =====
             function renderChapterHtml(index) {
                 if (!chapters.length || index < 0 || index >= chapters.length) return '';
                 const ch = chapters[index];
@@ -469,7 +602,7 @@
                 return html;
             }
 
-            // ===== 重置阅读内容（重新渲染指定章节） =====
+            // ===== 重置阅读内容 =====
             function resetReaderContent(startIndex) {
                 if (!chapters.length) return;
                 const html = renderChapterHtml(startIndex);
@@ -487,9 +620,12 @@
                 readerContent.classList.remove('hidden');
                 emptyState.classList.add('hidden');
                 loadingState.classList.add('hidden');
+                // 更新跳转输入框的 placeholder 或值
+                jumpInput.placeholder = `${startIndex+1}`;
+                jumpInput.value = '';
             }
 
-            // ===== 追加下一章（无缝） =====
+            // ===== 追加下一章 =====
             function appendNextChapter() {
                 if (loadedChapterCount >= chapters.length) {
                     showToast('已经是最后一章了', 1500);
@@ -504,10 +640,11 @@
                 updateChapterProgress(currentChapterIndex);
                 saveProgress(currentChapterIndex);
                 updateSidebarHighlight();
+                jumpInput.placeholder = `${currentChapterIndex+1}`;
                 return true;
             }
 
-            // ===== 【修复】手动跳转章节 =====
+            // ===== 跳转章节 =====
             function goToChapter(index) {
                 if (isLoading) return;
                 if (index < 0) index = 0;
@@ -517,8 +654,27 @@
                     contentArea.scrollTop = 0;
                     return;
                 }
-                // 重置到目标章节（重新渲染）
                 resetReaderContent(index);
+            }
+
+            // ===== 跳转输入框处理 =====
+            function handleJump() {
+                if (!chapters.length) {
+                    showToast('请先打开一本小说', 1500);
+                    return;
+                }
+                const val = parseInt(jumpInput.value, 10);
+                if (isNaN(val) || val < 1) {
+                    showToast('请输入有效的章节号（≥1）', 1500);
+                    return;
+                }
+                const idx = val - 1;
+                if (idx >= chapters.length) {
+                    showToast(`章节号最大为 ${chapters.length}`, 1500);
+                    return;
+                }
+                goToChapter(idx);
+                jumpInput.value = '';
             }
 
             function goToNext() {
@@ -545,6 +701,7 @@
             function updateChapterProgress(index) {
                 const total = chapters.length;
                 chapterProgress.textContent = total === 0 ? '— / —' : `${index+1} / ${total}`;
+                if (total > 0) jumpInput.placeholder = `${index+1}`;
             }
 
             function updateFooter(index) {
@@ -675,6 +832,7 @@
                     prevBtn.disabled = true;
                     nextBtn.disabled = true;
                     chapterProgress.textContent = '— / —';
+                    jumpInput.placeholder = '章';
 
                     // 恢复进度或使用 targetChapter
                     let restoreChapter = null;
@@ -826,8 +984,19 @@
                 nextBtn.addEventListener('click', goToNext);
                 copyLinkBtn.addEventListener('click', copyChapterLink);
 
+                // 跳转事件
+                jumpBtn.addEventListener('click', handleJump);
+                jumpInput.addEventListener('keydown', (e) => {
+                    if (e.key === 'Enter') {
+                        e.preventDefault();
+                        handleJump();
+                    }
+                });
+
                 document.addEventListener('keydown', (e) => {
-                    if (document.activeElement && document.activeElement.tagName === 'INPUT') return;
+                    if (document.activeElement && document.activeElement.tagName === 'INPUT') {
+                        if (e.key === 'Enter') return;
+                    }
                     if (e.key === 'ArrowLeft' || e.key === 'PageUp') { e.preventDefault(); goToPrev(); }
                     else if (e.key === 'ArrowRight' || e.key === 'PageDown') { e.preventDefault(); goToNext(); }
                     else if (e.key === 'Escape') closeSidebar();
@@ -852,6 +1021,7 @@
                     }
                 });
 
+                // 解析 URL 参数（仅用于首次打开时恢复）
                 const urlParams = new URLSearchParams(window.location.search);
                 const chapterParam = urlParams.get('chapter');
                 let targetChapter = null;
