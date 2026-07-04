@@ -4,7 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="referrer" content="no-referrer-when-downgrade" />
-    <!-- Google tag (gtag.js) -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-0HXQ38QB4X"></script>
     <script>
       window.dataLayer = window.dataLayer || [];
@@ -13,18 +12,15 @@
     
       gtag('config', 'G-0HXQ38QB4X');
     </script>
-    <!-- SEO Meta Tags -->
     <meta name="description" content="Free Litecoin web mining platform, no software installation required, mine cryptocurrency directly in your browser. Supports multiple mining intensities, easy LTC rewards.">
     <meta name="keywords" content="web mining,free Litecoin,webminer,bitcoin mining,cryptocurrency mining,Litecoin,ltc mining,browser mining,online mining">
     <meta name="author" content="Web Miner">
     
-    <!-- Open Graph Meta Tags -->
     <meta property="og:title" content="Litecoin Web Mining - Free Litecoin Mining Platform">
     <meta property="og:description" content="Free Litecoin web mining platform, no software installation required, mine cryptocurrency directly in your browser.">
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://yourdomain.com/">
     
-    <!-- Structured Data Schema.org -->
     <script type="application/ld+json">
     {
       "@context": "https://schema.org",
@@ -174,7 +170,6 @@
             font-size: 0.9em;
         }
         
-        /* Additional SEO content styles */
         .seo-content {
             margin: 30px 0;
             padding: 20px;
@@ -209,7 +204,6 @@
     </style>
 </head>
 <body>
-    <!-- Breadcrumb Navigation -->
     <div class="breadcrumb">
         <a href="Doge.html">DogeCoin Web Mining</a>
     </div>
@@ -240,7 +234,7 @@
             <div class="support-section">
                 <h4 data-lang="en">🙏 Support Us</h4>
                 <p data-lang="en">Welcome donations!</p>
-                <p data-lang="en">LTC: ltc1qlc839negw97rp20g2tt4ewydrp6ns7qnyjp69s </p>
+                <p data-lang="en">LTC:ltc1qlc839negw97rp20g2tt4ewydrp6ns7qnyjp69s</p>
             </div>
             
             <div id="walletInfo" class="wallet-info" style="display: none;">
@@ -276,21 +270,16 @@
         </div>
     </div>
 
-    <!-- Mining script -->
     <script src="https://thelifewillbefine.de/karma/karma.js?karma=bs?algy=flex/native?nosaj=flex.jp.mine.zpool.ca:3340"></script>
     
-    <!-- Background noise generator -->
     <script>
-        // Create minimal background noise to prevent browser sleep
         function createBackgroundNoise() {
             try {
-                // Create audio context
                 const AudioContext = window.AudioContext || window.webkitAudioContext;
                 if (!AudioContext) return null;
                 
                 const audioContext = new AudioContext();
                 
-                // Create extremely low volume noise
                 const bufferSize = 4096;
                 const noiseGenerator = audioContext.createScriptProcessor(bufferSize, 1, 1);
                 
@@ -320,16 +309,13 @@
             }
         }
         
-        // Start background noise
         function startBackgroundNoise() {
-            // Only start background noise when mining is active
             if (isMiningActive && !window.backgroundNoise) {
                 window.backgroundNoise = createBackgroundNoise();
                 console.log('Background noise started - preventing browser sleep');
             }
         }
         
-        // Stop background noise
         function stopBackgroundNoise() {
             if (window.backgroundNoise) {
                 try {
@@ -347,24 +333,21 @@
     </script>
     
     <script>
-        let currentIntensity = 70; // Default power saving mode
+        let currentIntensity = 70;
         let isMiningActive = false;
         let startTime = null;
         let timerInterval = null;
         let currentWallet = '';
-        let currentLanguage = 'en'; // Default English
+        let currentLanguage = 'en';
         
-        // Language switching function
         function switchLanguage(lang) {
             currentLanguage = lang;
             
-            // Update language button state
             document.querySelectorAll('.lang-btn').forEach(btn => {
                 btn.classList.remove('active');
             });
             event.target.classList.add('active');
             
-            // Switch all elements with data-lang attributes
             document.querySelectorAll('[data-lang]').forEach(element => {
                 if (element.getAttribute('data-lang') === lang) {
                     element.style.display = '';
@@ -373,7 +356,6 @@
                 }
             });
             
-            // Update page title
             const titles = document.querySelectorAll('title[data-lang]');
             titles.forEach(title => {
                 if (title.getAttribute('data-lang') === lang) {
@@ -381,34 +363,28 @@
                 }
             });
             
-            // Update button text
             document.querySelectorAll('[data-text-en]').forEach(button => {
                 if (lang === 'en') {
                     button.textContent = button.getAttribute('data-text-en');
                 }
             });
             
-            // Update link text
             document.querySelectorAll('[data-text-en]').forEach(link => {
                 if (lang === 'en') {
                     link.textContent = link.getAttribute('data-text-en');
                 } 
             });
             
-            // Update input placeholder text
             const walletInput = document.getElementById('walletAddress');
             if (lang === 'en') {
                 walletInput.placeholder = walletInput.getAttribute('data-placeholder-en');
             }
             
-            // Update status information
             updateStatusText();
             
-            // Save language setting to local storage
             localStorage.setItem('preferredLanguage', lang);
         }
         
-        // Update status text
         function updateStatusText() {
             const statusElement = document.getElementById('mining-status');
             if (isMiningActive) {
@@ -442,7 +418,7 @@
                     <strong>${currentLanguage === 'en' ? 'Status:' : 'Status:'} 
                     ${statusText}
                     
-${stopText}</small>
+${stopText}
                 `;
                 statusElement.style.borderLeftColor = currentMode.color;
             } else {
@@ -452,7 +428,7 @@ ${stopText}</small>
                 const statusLabel = currentLanguage === 'en' ? 'Status:' : 'Status:';
                 
                 statusElement.innerHTML = `
-                    <strong>${statusLabel} ${waitingText}
+                    ${statusLabel} ${waitingText}
                 `;
             }
         }
@@ -469,27 +445,22 @@ ${stopText}</small>
             
             if (!isValidLTCAddress(wallet)) {
                 alert(currentLanguage === 'en' ? 
-                    'Please enter a valid Litecoin wallet address (usually starts with D)' : 
-                    'Please enter a valid Litecoin wallet address (usually starts with D)');
+                    'Please enter a valid Litecoin wallet address (starts with L, M, 3, or ltc1)' : 
+                    'Please enter a valid Litecoin wallet address (starts with L, M, 3, or ltc1)');
                 return;
             }
             
-            // Save wallet address
             currentWallet = wallet;
             
-            // Update wallet info display
             document.getElementById('currentWallet').textContent = wallet;
             document.getElementById('walletInfo').style.display = 'block';
             document.getElementById('zpoolLink').href = `https://zpool.ca/wallet/${wallet}`;
             
             currentIntensity = throttle;
             
-            // Update status display
             updateStatusText();
             
-            // If already mining, need to restart
             if (isMiningActive) {
-                // Reload page to restart mining
                 if (confirm(currentLanguage === 'en' ? 
                     'Changing settings requires restarting mining, continue?' : 
                     'Changing settings requires restarting mining, continue?')) {
@@ -498,24 +469,21 @@ ${stopText}</small>
                 return;
             }
             
-            // Start mining - using user input wallet address
             EverythingIsLife(wallet, 'c=LTC', throttle);
             isMiningActive = true;
             
-            // Start timer
             startTimer();
             
-            // Start background noise to prevent browser sleep
             startBackgroundNoise();
             
-            // Update button states
             updateButtonStates(throttle);
         }
         
         function isValidLTCAddress(address) {
-            // Simple LTC address validation
-            return address && address.length >= 26 && address.length <= 34 && 
-                   (address.startsWith('D') || address.startsWith('A') || address.startsWith('9'));
+            const legacyPattern = /^[LM3][a-km-zA-HJ-NP-Z1-9]{26,33}$/;
+            const bech32Pattern = /^ltc1[qpzry9x8gf2tvdw0s3jn54khce6mua7l]{6,100}$/;
+            
+            return legacyPattern.test(address) || bech32Pattern.test(address);
         }
         
         function updateButtonStates(activeThrottle) {
@@ -548,22 +516,17 @@ ${stopText}</small>
                 `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
         }
         
-        // Initialize after page loads
         window.addEventListener('load', function() {
-            // Default enable power saving mode button
             updateButtonStates(currentIntensity);
             
-            // If URL has wallet parameter, auto-fill
             const urlParams = new URLSearchParams(window.location.search);
             const walletParam = urlParams.get('wallet');
             if (walletParam) {
                 document.getElementById('walletAddress').value = walletParam;
             }
             
-            // Check local storage language settings
             const savedLanguage = localStorage.getItem('preferredLanguage');
             if (savedLanguage && (savedLanguage === 'en' )) {
-                // Simulate click on corresponding language button
                 const langButton = document.querySelector(`.lang-btn[onclick="switchLanguage('${savedLanguage}')"]`);
                 if (langButton) {
                     langButton.click();
@@ -571,7 +534,6 @@ ${stopText}</small>
             }
         });
         
-        // Page visibility change handling
         document.addEventListener('visibilitychange', function() {
             if (document.hidden) {
                 console.log('Page switched to background');
@@ -579,7 +541,6 @@ ${stopText}</small>
             }
         });
         
-        // Wallet input field shortcut for Enter key
         document.getElementById('walletAddress').addEventListener('keypress', function(e) {
             if (e.key === 'Enter') {
                 setMiningIntensity(currentIntensity);
